@@ -5,7 +5,7 @@ Install
 ----
 
 - download `raw-entries.ndjson` to the team-index directory.
-- `iojs .`
+- `iojs . --team=TEAM_ID --ts=TIMESTAMP`
 
 To do
 ----

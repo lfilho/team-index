@@ -1,0 +1,31 @@
+{
+  "name": "team-index",
+  "version": "1.0.0",
+  "description": "Index of teams and people",
+  "main": "index.js",
+  "dependencies": {
+    "bind-fn": "^1.0.1",
+    "bytewise": "^0.8.0",
+    "fingdex": "0.0.1",
+    "levelup": "^0.19.0",
+    "memdown": "^1.0.0",
+    "minimist": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshwnj/team-index.git"
+  },
+  "keywords": [
+    "index"
+  ],
+  "author": "joshwnj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshwnj/team-index/issues"
+  },
+  "homepage": "https://github.com/joshwnj/team-index"
+}
