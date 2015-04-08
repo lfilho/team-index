@@ -4,12 +4,22 @@ let Fingdex = require('fingdex');
 let bind = require('bind-fn');
 let arrayFrom = require('./lib/array-from');
 
+let argv = require('minimist')(process.argv.slice(2));
+let sourceFilename = argv.source;
+let teamId = argv.team;
+let ts = argv.ts;
+
+if (!teamId || !ts) {
+  console.log('Usage: iojs . --source=SOURCE_FILENAME --team=TEAM_ID --ts=TIMESTAMP');
+  process.exit();
+}
+
 // ----
 // create a source for log entries
 
 let sourceIndex = new Fingdex();
 let fs = require('fs');
-fs.readFileSync(__dirname + '/raw-entries.ndjson', 'utf8')
+fs.readFileSync(sourceFilename, 'utf8')
   .split('\n')
   .filter(Boolean)
   .map(JSON.parse)
@@ -63,10 +73,11 @@ function showTeamAtTime (teamId, now, cb) {
         return (acc || 0) + val;
       };
 
-      let hours = teamsAtTime.teams.memberHoursByTeam.get(teamId);
-      let totalHours = arrayFrom(hours.values()).reduce(sum);
+      let hours = teamsAtTime.teams.memberHoursByTeam.get(teamId) || new Map();
+      let totalHours = arrayFrom(hours.values()).reduce(sum, 0);
+      let members = teamsAtTime.teams.membersByTeam.get(teamId) || new Set();
 
-      console.log('\nWho is in the %s team @ %s?\n', teamId, new Date(now), arrayFrom(teamsAtTime.teams.membersByTeam.get(teamId)));
+      console.log('\nWho is in the %s team @ %s?\n', teamId, new Date(now), arrayFrom(members));
       console.log('Total dev hours per week: %d\n', totalHours, arrayFrom(hours));
 
       if (cb) { cb(); }
@@ -74,15 +85,6 @@ function showTeamAtTime (teamId, now, cb) {
 }
 
 // ----
-
-let argv = require('minimist')(process.argv.slice(2));
-let teamId = argv.team;
-let ts = argv.ts;
-
-if (!teamId || !ts) {
-  console.log('Usage: iojs . --team=TEAM_ID --ts=TIMESTAMP');
-  process.exit();
-}
 
 timelineIndex.catchup();
 console.log('\nInfo about %s:', teamId, docIndex.getDoc(teamId));

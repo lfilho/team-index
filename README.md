@@ -5,10 +5,15 @@ Install
 ----
 
 - download `raw-entries.ndjson` to the team-index directory.
-- `iojs . --team=TEAM_ID --ts=TIMESTAMP`
+- `iojs . --source=SOURCE_FILENAME --team=TEAM_ID --ts=TIMESTAMP`
+
+eg.
+
+```
+iojs . --source=./test-entries.ndjson --team=ATeam --ts=1428471352420
+```
 
 To do
 ----
 
-- make some mock data so we can remove the download step from install
 - trial archieml format for inputs
