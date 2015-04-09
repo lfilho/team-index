@@ -3,8 +3,8 @@ UI
 
 I'm imagining the end result will be something like a wiki, but each "wiki page" can also contain data that you can query and use as the data source for any other application (like the chart / dashboard).
 
-- [http://screencast.com/t/N4vS3aPIwdO](Mockup)
-- you can also run the mockup from the files in [./ui-mockup](ui-mockup/)
+- [Annotated mockup](http://screencast.com/t/N4vS3aPIwdO)
+- you can also run the mockup from the files in [ui-mockup/](./ui-mockup)
 
 Enter an ID
 ----
@@ -22,7 +22,7 @@ Enter a Type
 Enter body information
 ----
 
-- using [http://archieml.org/](ArchieML) format gives an easy way to write key/values, arrays, object etc.
+- using [ArchieML](http://archieml.org/) format gives an easy way to write key/values, arrays, object etc.
 - as you type the Preview section is live-updated.
 - the way Preview is rendered can be customized by registering a javascript function for a certain `_type`.
 
