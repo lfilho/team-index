@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="team-index-ui.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="form">
+      <div class="id">
+        <input type="text" name="id" placeholder="ID">
+      </div>
+
+      <div class="type">
+        <input type="text" name="type" placeholder="TYPE">
+      </div>
+
+      <div class="body">
+        <textarea name="body" placeholder="BODY"></textarea>
+      </div>
+
+      <div class="preview">
+        <label>PREVIEW</label>
+      </div>
+
+      <script type="text/html" id="preview-example">
+        <h1>MyTeam</h1>
+
+        <pre><code>
+title: My Team
+startedAt: 0
+        </code></pre>
+
+        <p>Preview also whatever custom stuff is set up for docs with this type. Could be usage instructions, or helper shortcuts.</p>
+
+        <h2>Members</h2>
+        <p>(linked <strong>teamMembership</strong> docs)</p>
+        <ul>
+          <li><a href="#">PersonOne</a></li>
+          <li><a href="#">PersonTwo</a></li>
+        </ul>
+
+        <button>+</button> Create a <strong>teamMembership</strong>
+      </script>
+    </div>
+    <script src="team-index-ui.js"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #EEE;
+  font: 14px/1.6 Courier;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.form input,
+.form textarea {
+  font: 14px/1.6 Courier;
+  padding: 10px;
+  margin: 0;
+  border: 0;
+  background: #FFF;
+  width: 100%;
+  height: 100%;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form .id,
+.form .type {
+  width: 100%;
+  margin-bottom: 1px;
+}
+
+.form .body {
+  width: 50%;
+  min-height: 300px;
+  position: relative;
+}
+
+.form .body textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.form .preview {
+  width: 50%;
+  padding: 10px;
+}
+
+.form .preview label {
+  color: #999;
+}
+
+.form .preview h1 {
+  margin: 0;
+}
