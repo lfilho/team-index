@@ -9,7 +9,7 @@ let sourceFilename = argv.source;
 let teamId = argv.team;
 let ts = argv.ts;
 
-if (!teamId || !ts) {
+if (!sourceFilename || !teamId || !ts) {
   console.log('Usage: iojs . --source=SOURCE_FILENAME --team=TEAM_ID --ts=TIMESTAMP');
   process.exit();
 }
