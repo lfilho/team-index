@@ -1,12 +1,12 @@
 {
   "name": "team-index",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Index of teams and people",
   "main": "index.js",
   "dependencies": {
     "bind-fn": "^1.0.1",
     "bytewise": "^0.8.0",
-    "fingdex": "0.0.1",
+    "fingdex": "0.1.0",
     "levelup": "^0.19.0",
     "memdown": "^1.0.0",
     "minimist": "^1.1.1"

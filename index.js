@@ -20,7 +20,7 @@ fs.readFileSync(sourceFilename, 'utf8')
   .split('\n')
   .filter(Boolean)
   .map(JSON.parse)
-  .forEach(bind(sourceIndex, 'addEntry'));
+  .forEach(bind(sourceIndex, 'append'));
 
 require('./lib/get-timeline-data')(sourceIndex, teamId, ts, function (err, res) {
   console.log('\nWho is in the %s team @ %s?\n', teamId, new Date(ts), arrayFrom(res.members));
