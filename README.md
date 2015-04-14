@@ -15,21 +15,33 @@ The application expects some environment variables to be set:
 - `GOOGLE_SECRET` (secret for google OAuth)
 - `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
 
+Setup
+----
+
+1. Install iojs. If you're running a recent version of nvm, `nvm install iojs && nvm use iojs` will suffice.
+2. `npm install`
+
 Startup
 ----
 
 ```
-npm install
 iojs index.js
 ```
 
+Usage
+----
+
+`iojs . --source=SOURCE_FILENAME --team=TEAM_ID --ts=TIMESTAMP`
+
+Where:
+- `TIMESTAMP` is in milliseconds and
+- `SOURCE_FILENAME` points to a `.ndjson` file.
 
 To do
 ----
 
-- trial archieml format for inputs
-- add option to automatically catchup
-
+- [ ] trial archieml format for inputs
+- [ ] add option to automatically catchup
 
 FAQ
 ----
