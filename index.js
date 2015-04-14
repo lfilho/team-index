@@ -29,7 +29,7 @@ setupDb({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
   // ----
   // auth routes
 
-  require('./lib/auth')(router, sessionStore);
+  require('./lib/auth-routes')(router, sessionStore);
 
   // ----
   // page routes
