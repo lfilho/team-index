@@ -4,7 +4,14 @@ let httpServer = require('./lib/http-server')();
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
-  sessionDbFile: './.sessions'
+  sessionDbFile: './.sessions',
+  auth: {
+    clientId: process.env.GOOGLE_CLIENT,
+    secret: process.env.GOOGLE_SECRET,
+    baseUrl: process.env.BASE_URL,
+    loginUri: '/login',
+    callbackUri: '/oauth2callback',
+  }
 };
 
 let setupDb = require('./lib/setup-db');
@@ -18,7 +25,7 @@ setupDb({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
   // ----
   // routes
 
-  require('./lib/auth-routes')(router, sessionStore);
+  require('./lib/auth-routes')(router, sessionStore, config.auth);
   require('./lib/page-routes')(router, sessionStore);
   require('./lib/data-api-routes')(router, sessionStore, db, docIndex);
 
