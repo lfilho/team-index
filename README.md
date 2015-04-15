@@ -5,23 +5,15 @@ team index
 
 See [the test cases](./tests/index.js) for example usage.
 
-App Config
-----
-
-The application expects some environment variables to be set:
-
-- `PORT` (optional, default: 8000)
-- `GOOGLE_CLIENT` (clientID for google OAuth)
-- `GOOGLE_SECRET` (secret for google OAuth)
-- `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
-
-Startup
+Install and run
 ----
 
 ```
 npm install
 iojs index.js
 ```
+
+See [[Team Index]] docs in [./index.js](./index.js) for more info.
 
 
 To do

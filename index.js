@@ -1,6 +1,43 @@
 'use strict';
 
-let httpServer = require('./lib/http-server')();
+/*
+
+Team Index
+====
+
+This module is the application entry point.
+
+Some enviroment variables are expected as described below in [[ Config ][ Environment variables ]].
+
+After initializing the environment, start the application with `iojs index.js`
+
+*/
+
+/*
+
+Config
+====
+
+Environment variables
+----
+
+To avoid committing passwords to the repo it's recommended to create a gitignored file called `setup-env`, eg.
+
+```
+export BASE_URL=http://localhost:8000
+export GOOGLE_CLIENT=...
+export GOOGLE_SECRET=...
+```
+
+Then to initialize the environment run `source setup-env`.
+
+The expected environment variables are:
+- `PORT` (optional, default: 8000)
+- `GOOGLE_CLIENT` (clientID for google OAuth)
+- `GOOGLE_SECRET` (secret for google OAuth)
+- `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
+
+*/
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
@@ -14,23 +51,29 @@ const config = {
   }
 };
 
-let setupDb = require('./lib/setup-db');
-let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
+/*
 
-setupDb({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
+Startup procedure
+====
+
+*/
+
+// - setup the database and doc index
+require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
   if (err) { throw err; }
 
-  let router = httpServer.router;
+  // - setup the session storage
+  let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
 
-  // ----
-  // routes
+  // - setup http server & routes
+  let httpServer = require('./lib/http-server')();
+  let router = httpServer.router;
 
   require('./lib/auth-routes')(router, sessionStore, config.auth);
   require('./lib/page-routes')(router, sessionStore);
   require('./lib/data-api-routes')(router, sessionStore, db, docIndex);
 
-  // ----
-
+  // - start the http server
   httpServer.listen(config.port);
   console.log('ready on :%d', config.port);
 });
