@@ -38,6 +38,7 @@ The expected environment variables are:
 - `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
 
 */
+let path = require('path');
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
@@ -48,6 +49,9 @@ const config = {
     baseUrl: process.env.BASE_URL,
     loginUri: '/login',
     callbackUri: '/oauth2callback',
+  },
+  staticFiles: {
+    dir: path.join(__dirname, 'static')
   }
 };
 
@@ -69,6 +73,7 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   let httpServer = require('./lib/http-server')();
   let router = httpServer.router;
 
+  require('./lib/static-routes')(router, config.staticFiles);
   require('./lib/auth-routes')(router, sessionStore, config.auth);
   require('./lib/page-routes')(router, sessionStore);
   require('./lib/data-api-routes')(router, sessionStore, db, docIndex);
