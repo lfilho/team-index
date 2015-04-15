@@ -1,0 +1,45 @@
+/*
+ * Common styles
+ */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: $body-bg-color;
+  font-family: 'Open Sans', sans-serif;
+  color: $body-text-color;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+input {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  color: $body-link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+  }
+}
+
+ul, ol {
+  padding: 0;
+}
+
+.container {
+  max-width: 71.25em;
+  min-height: 100%;
+  min-width: 860px;
+  padding: 0 0 1em;
+  margin: 0 auto;
+  position: relative;
+}

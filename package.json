@@ -30,8 +30,10 @@
   },
   "scripts": {
     "pre-build": "mkdir -p static/dist",
-    "build": "npm run pre-build && browserify frontend/main.js > static/dist/main.js",
-    "build-watch": "npm run pre-build && watchify -d -v -o static/dist/main.js frontend/main.js",
+    "build": "npm run pre-build && npm run build-css && npm run build-js",
+    "build-css": "scss frontend/styles/main.scss > static/dist/main.css",
+    "build-js": "browserify frontend/main.js > static/dist/main.js",
+    "build-watch": "npm run pre-build && npm run build-css && watchify -d -v -o static/dist/main.js frontend/main.js",
     "test": "tape tests/"
   },
   "repository": {

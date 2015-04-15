@@ -1,4 +1,5 @@
 node_modules
 .db
 .sessions
+.sass-cache
 static/dist
