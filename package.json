@@ -24,9 +24,14 @@
     "st": "^0.5.3"
   },
   "devDependencies": {
-    "tape": "^4.0.0"
+    "browserify": "^9.0.8",
+    "tape": "^4.0.0",
+    "watchify": "^3.1.1"
   },
   "scripts": {
+    "pre-build": "mkdir -p static/dist",
+    "build": "npm run pre-build && browserify frontend/main.js > static/dist/main.js",
+    "build-watch": "npm run pre-build && watchify -d -v -o static/dist/main.js frontend/main.js",
     "test": "tape tests/"
   },
   "repository": {

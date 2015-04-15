@@ -10,6 +10,7 @@ Install and run
 
 ```
 npm install
+npm run build-watch &
 iojs index.js
 ```
 
