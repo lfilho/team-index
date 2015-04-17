@@ -10,6 +10,8 @@ html {
 }
 
 body {
+  padding: 0;
+  margin: 0;
   background: $body-bg-color;
   font-family: 'Open Sans', sans-serif;
   color: $body-text-color;
@@ -42,4 +44,24 @@ ul, ol {
   padding: 0 0 1em;
   margin: 0 auto;
   position: relative;
+}
+
+header {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: flex-end;
+  padding: 20px;
+  background: #FFF;
+}
+
+.user .picture {
+  max-width: 30px;
+  max-height: 30px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.user button[name="logout"] {
+  display: inline-block;
+  margin-left: 10px;
 }
