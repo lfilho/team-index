@@ -31,18 +31,24 @@ export GOOGLE_SECRET=...
 
 Then to initialize the environment run `source setup-env`.
 
-The expected environment variables are:
-- `PORT` (optional, default: 8000)
-- `GOOGLE_CLIENT` (clientID for google OAuth)
-- `GOOGLE_SECRET` (secret for google OAuth)
-- `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
-
 */
 let path = require('path');
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
   sessionDbFile: './.sessions',
+
+  /*
+
+    Authentication
+    ----
+
+    The environment variables needed for auth are:
+    - `GOOGLE_CLIENT` (clientID for google OAuth)
+    - `GOOGLE_SECRET` (secret for google OAuth)
+    - `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
+
+  */
   auth: {
     clientId: process.env.GOOGLE_CLIENT,
     secret: process.env.GOOGLE_SECRET,
@@ -50,8 +56,18 @@ const config = {
     loginUri: '/login',
     callbackUri: '/oauth2callback',
   },
+
+  /*
+
+    Static files
+    ----
+
+    Static file caching is disabled outside of production to make debugging easier.
+
+  */
   staticFiles: {
-    dir: path.join(__dirname, 'static')
+    dir: path.join(__dirname, 'static'),
+    cacheEnabled: (process.env.NODE_ENV === 'production')
   }
 };
 
