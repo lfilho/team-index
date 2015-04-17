@@ -12,7 +12,12 @@ var App = React.createClass({
     var WrappedAuth = stateWrapper(Auth, actionHandler, actionHandler._data.auth);
     return (
       <div>
-        <WrappedAuth />
+        <header>
+          <div className="menu"></div>
+          <div className="user">
+            <WrappedAuth />
+          </div>
+        </header>
       </div>
     );
   }

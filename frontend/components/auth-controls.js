@@ -44,9 +44,9 @@ var AuthControls = React.createClass({
   _renderLoggedIn: function () {
     return (
       <div>
-        <img src={this.props.picture} />
-        Welcome back {this.props.name}&nbsp;
-        <button onClick={this.handleLogoutClick}>Logout</button>
+        <img className="picture" src={this.props.picture} />
+        {this.props.name}
+        <button name="logout" onClick={this.handleLogoutClick}>Logout</button>
       </div>
     );
   },
