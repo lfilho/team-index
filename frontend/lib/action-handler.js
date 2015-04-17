@@ -24,7 +24,10 @@ ActionHandler.prototype.onAction = function (type, args, cb) {
       if (err) { return cb(err); }
       if (resp.statusCode !== 200) { return cb(new Error('logout failed')); }
 
-      return cb(null, assign(data.auth, { userEmail: null }));
+      return cb(null, assign(data.auth, {
+        name: null,
+        picture: null
+      }));
     });
     return;
   }

@@ -9,11 +9,8 @@ var DashboardApp = require('./components/app');
   `window.authState` is set in the page template, containing info about the current user's authentication.
 
 */
-var authState = window.authState || {};
 var actionHandler = require('./lib/action-handler')({
-  auth: {
-    userEmail: authState.userEmail
-  }
+  auth: window.authState || {}
 });
 
 React.render(

@@ -2,13 +2,14 @@ var React = require('react');
 
 var AuthControls = React.createClass({
   propTypes: {
-    userEmail: React.PropTypes.string,
+    name: React.PropTypes.string,
+    picture: React.PropTypes.string,
     actionCallback: React.PropTypes.func.isRequired
   },
 
   getDefaultProps: function () {
     return {
-      userEmail: null
+      name: null
     };
   },
 
@@ -37,13 +38,14 @@ var AuthControls = React.createClass({
       return <div>...loading...</div>;
     }
 
-    return this.props.userEmail ? this._renderLoggedIn() : this._renderLoggedOut();
+    return this.props.name ? this._renderLoggedIn() : this._renderLoggedOut();
   },
 
   _renderLoggedIn: function () {
     return (
       <div>
-        Welcome back {this.props.userEmail}&nbsp;
+        <img src={this.props.picture} />
+        Welcome back {this.props.name}&nbsp;
         <button onClick={this.handleLogoutClick}>Logout</button>
       </div>
     );
