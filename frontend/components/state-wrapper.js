@@ -7,8 +7,12 @@ This means that components can be built without much knowledge of the surroundin
 */
 var React = require('react');
 
-module.exports = function (Component, actionHandler) {
+module.exports = function (Component, actionHandler, initState) {
   return React.createClass({
+
+    getInitialState: function () {
+      return initState || {};
+    },
 
     onAction: function (type, data) {
       var self = this;

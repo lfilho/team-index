@@ -1,26 +1,33 @@
 var assign = require('object-assign');
+var xhr = require('xhr');
 
 function ActionHandler (data) {
   this._data = data;
 }
 
-
 ActionHandler.prototype.onAction = function (type, args, cb) {
-  var self = this;
   var data = this._data;
 
   if (!cb) { return; }
 
-  // fake auth stuff
-  setTimeout(function () {
-    if (type === 'login') {
-      return cb(null, assign(data.auth, { userEmail: 'josh@x-team.com' }));
-    }
+  if (type === 'login') {
+    // redirect to the login page for google auth
+    location.href = '/login';
+    return;
+  }
 
-    if (type === 'logout') {
+  if (type === 'logout') {
+    // logout and update page state
+    xhr({
+      uri: '/logout',
+    }, function (err, resp, body) {
+      if (err) { return cb(err); }
+      if (resp.statusCode !== 200) { return cb(new Error('logout failed')); }
+
       return cb(null, assign(data.auth, { userEmail: null }));
-    }
-  }, 1000);
+    });
+    return;
+  }
 };
 
 module.exports = function (data) {

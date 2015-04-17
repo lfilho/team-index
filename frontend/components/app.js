@@ -8,7 +8,8 @@ var App = React.createClass({
   },
 
   render: function () {
-    var WrappedAuth = stateWrapper(Auth, this.props.actionHandler);
+    var actionHandler = this.props.actionHandler;
+    var WrappedAuth = stateWrapper(Auth, actionHandler, actionHandler._data.auth);
     return (
       <div>
         <WrappedAuth />
