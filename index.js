@@ -48,6 +48,8 @@ const config = {
     - `GOOGLE_SECRET` (secret for google OAuth)
     - `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
 
+    For development you can create your own clienID and secret here: https://console.developers.google.com/project
+
   */
   auth: {
     clientId: process.env.GOOGLE_CLIENT,
