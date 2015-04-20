@@ -19,8 +19,9 @@ Store.prototype.set = function (changes) {
   this.changeEmitter.emit('change');
 };
 
-Store.prototype.get = function () {
-  return this.data;
+Store.prototype.get = function (key) {
+  if (key === undefined) { return this.data; }
+  return this.data[key];
 };
 
 module.exports = Store;
