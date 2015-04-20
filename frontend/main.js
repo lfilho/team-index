@@ -26,8 +26,9 @@ stores.auth.isLoggedIn = function () {
 
 // ----
 
+var currentRoute = location.hash.replace(/^\#/, '');
 stores.route = new Store({
-  current: '/'
+  current: currentRoute
 });
 
 // ----
@@ -59,6 +60,8 @@ actions.setRoute = function (args) {
   });
 };
 
+// ----
+
 var createConnectedComponent = require('./lib/create-connected-component')(stores, actions);
 var DashboardApp = require('./components/dashboard-app')(createConnectedComponent);
 
@@ -66,6 +69,8 @@ React.render(
   React.createElement(DashboardApp),
   document.getElementById('app')
 );
+
+// ----
 
 window.stores = stores;
 window.actions = actions;
