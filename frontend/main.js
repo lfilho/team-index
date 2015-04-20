@@ -33,7 +33,44 @@ stores.route = new Store({
 
 // ----
 
+stores.wiki = new Store({});
+
+// ----
+
 var actions = {};
+
+actions.wikiLoad = function (args) {
+  // don't need to load if already in memory
+  if (stores.wiki.data.hasOwnProperty(args.id)) { return; }
+
+  xhr({
+    url: '/api/docs/' + args.id
+  }, function (err, resp, body) {
+    if (err) { return console.error(err); }
+
+    // not found: create a placeholder
+    if (resp.statusCode === 404) {
+      let docs = {};
+      docs[args.id] = { _id: args.id };
+      stores.wiki.set(docs);
+      return;
+    }
+
+    if (resp.statusCode !== 200) { return console.error('load failed', resp); }
+
+    var data;
+    try {
+      data = JSON.parse(body);
+    }
+    catch (e) {
+      return console.error('invalid body', resp);
+    }
+
+    var docs = {};
+    docs[args.id] = data.doc;
+    stores.wiki.set(docs);
+  });
+};
 
 actions.login = function (args) {
   location.href = '/login';
@@ -44,8 +81,8 @@ actions.logout = function () {
   xhr({
     uri: '/logout',
   }, function (err, resp, body) {
-    if (err) { return cb(err); }
-    if (resp.statusCode !== 200) { console.error('logout failed'); }
+    if (err) { return console.error(err); }
+    if (resp.statusCode !== 200) { return console.error('logout failed'); }
 
     stores.auth.set({
       name: null,

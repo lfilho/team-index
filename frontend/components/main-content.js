@@ -5,8 +5,10 @@ function setup (createConnectedComponent) {
     return {};
   });
 
-  var Wiki = createConnectedComponent(require('./wiki'), [], function (stores, props) {
-    return {};
+  var Wiki = createConnectedComponent(require('./wiki'), ['wiki'], function (stores, props) {
+    return {
+      docs: stores.wiki.get()
+    };
   });
 
   return React.createClass({

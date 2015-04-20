@@ -1,0 +1,38 @@
+.wiki {
+  display: flex;
+  flex-flow: wrap;
+  align-items: stretch;
+
+  .edit,
+  .preview {
+    flex-grow: 1;
+    min-width: 350px;
+  }
+}
+
+.wiki .edit {
+  position: relative;
+
+  button[name=load] {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    padding: 10px;
+  }
+
+  textarea {
+    min-height: 300px;
+  }
+}
+
+.wiki .preview {
+  padding: 10px;
+}
