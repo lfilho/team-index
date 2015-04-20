@@ -7,8 +7,16 @@ This means that components can be built without much knowledge of the surroundin
 */
 var React = require('react');
 
-module.exports = function (stores, actions) {
-  return function (Component, storeNames, loadState) {
+function setup (stores, actions) {
+  function create (Component, storeNames, loadState) {
+    var isFunc = (typeof Component === 'function');
+    var isReactClass = (isFunc && typeof Component.prototype.render === 'function');
+
+    // if this is a setup function, call it to get a react class.
+    if (isFunc && !isReactClass) {
+      Component = Component(create);
+    }
+
     return React.createClass({
 
       getInitialState: function () {
@@ -49,4 +57,8 @@ module.exports = function (stores, actions) {
       }
     });
   };
+
+  return create;
 };
+
+module.exports = setup;

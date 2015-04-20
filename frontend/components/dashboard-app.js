@@ -1,7 +1,7 @@
 var React = require('react');
 
 function setup (createConnectedComponent) {
-  var MainContent = createConnectedComponent(require('./main-content')(createConnectedComponent), ['auth', 'route'], function (stores, props) {
+  var MainContent = createConnectedComponent(require('./main-content'), ['auth', 'route'], function (stores, props) {
     return {
       isLoggedIn: stores.auth.isLoggedIn(),
       route: stores.route.data.current
