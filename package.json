@@ -4,6 +4,7 @@
   "description": "Index of teams and people",
   "main": "index.js",
   "dependencies": {
+    "archieml": "^0.1.2",
     "bind-fn": "^1.0.1",
     "bytewise": "^0.8.0",
     "concat-stream": "^1.4.8",

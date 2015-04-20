@@ -1,9 +1,35 @@
 var React = require('react');
+var archieml = require('archieml');
+
+function convertDocToArchie (doc) {
+  var lines = Object.keys(doc).map(function (key) {
+    // ignore reserved keys
+    if (key[0] === '_') { return; }
+
+    return key + ': ' + doc[key];
+  });
+
+  return lines.filter(Boolean).join('\n');
+}
+
+function generatePreview (doc, body) {
+  // convert body to json and back again, so we only preview valid stuff
+  var parsed = archieml.load(body);
+  var preview = convertDocToArchie(parsed);
+
+  return (
+    <div>
+      <h1>{doc._id}</h1>
+      <pre>{preview}</pre>
+    </div>
+  );
+}
 
 module.exports = React.createClass({
   getInitialState: function () {
     return {
-      id: null
+      id: null,
+      body: null
     };
   },
 
@@ -15,31 +41,42 @@ module.exports = React.createClass({
     this.setState({ id: id });
   },
 
-  onChangeBody: function (event) {
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.docs) {
+      let doc = nextProps.docs[this.state.id];
+      if (doc) {
+        this.setState({ body: convertDocToArchie(doc) });
+      }
+    }
+  },
 
+  onChangeBody: function (event) {
+    var body = this.refs.bodyField.getDOMNode().value.trim();
+    this.setState({ body: body });
   },
 
   render: function () {
-    console.log('render: Wiki', this.props);
-
-    var body;
     var doc;
     var isLoading = false;
     var id = this.state.id;
     var typeField;
-    var bodyField;
 
     if (id) {
       doc = this.props.docs[id];
       if (!doc) {
         isLoading = true;
-        body = '';
       }
       else {
-        body = JSON.stringify(doc);
         typeField = <input name="type" placeholder="Type" value={doc._type} readOnly={!!doc._type} />;
-        bodyField = <textarea name="body" defaultValue={body} onChange={this.onChangeBody}></textarea>;
       }
+    }
+
+    var bodyField;
+    var preview;
+
+    if (this.state.body) {
+      bodyField = <textarea ref="bodyField" name="body" defaultValue={this.state.body} onChange={this.onChangeBody}></textarea>;
+      preview = generatePreview(doc, this.state.body);
     }
 
     return (
@@ -52,7 +89,7 @@ module.exports = React.createClass({
           {bodyField}
         </form>
         <div className="preview">
-        preview goes here...
+          {preview}
         </div>
       </div>
     );
