@@ -6,7 +6,7 @@
   .edit,
   .preview {
     flex-grow: 1;
-    min-width: 350px;
+    min-width: 500px;
   }
 }
 
@@ -29,7 +29,7 @@
   }
 
   textarea {
-    min-height: 300px;
+    min-height: 100px;
   }
 }
 

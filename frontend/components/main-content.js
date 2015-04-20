@@ -16,7 +16,7 @@ function setup (createConnectedComponent) {
       console.log('render: MainContent', this.props);
 
       if (!this.props.isLoggedIn) {
-        return <div>Log in to get started</div>;
+        return <div className="welcome">X-TEAM DASHBOARD</div>;
       }
 
       var componentsByRoute = {

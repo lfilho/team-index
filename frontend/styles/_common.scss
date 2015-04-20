@@ -51,7 +51,21 @@ header {
   flex-flow: wrap;
   justify-content: space-between;
   padding: 20px;
-  background: #FFF;
+  background: #FFF url(/static/img/x.png) 20px 50% no-repeat;
+}
+
+header .menu {
+  margin-left: 60px;
+
+  ul {
+    list-style-type: none;
+    margin: 3px 0 0 0;
+  }
+
+  li {
+    display: inline;
+    margin-right: 15px;
+  }
 }
 
 .user .picture {
@@ -64,4 +78,9 @@ header {
 .user button[name="logout"] {
   display: inline-block;
   margin-left: 10px;
+}
+
+.main .welcome {
+  text-align: center;
+  margin-top: 30px;
 }
