@@ -38,7 +38,7 @@ module.exports = React.createClass({
       else {
         body = JSON.stringify(doc);
         typeField = <input name="type" placeholder="Type" value={doc._type} readOnly={!!doc._type} />;
-        bodyField = <textarea name="body" value={body} onChange={this.onChangeBody}></textarea>;
+        bodyField = <textarea name="body" defaultValue={body} onChange={this.onChangeBody}></textarea>;
       }
     }
 
