@@ -42,7 +42,7 @@ var xhr = require('xhr');
 actions.logout = function () {
   xhr({
     uri: '/logout',
-  }, function (err) {
+  }, function (err, resp, body) {
     if (err) { return cb(err); }
     if (resp.statusCode !== 200) { console.error('logout failed'); }
 
