@@ -1,19 +1,34 @@
 var React = require('react');
 
-var MainContent = React.createClass({
-  render: function () {
-    console.log('render: MainContent', this.props);
+function setup (createConnectedComponent) {
+  var Charts = createConnectedComponent(require('./charts'), [], function (stores, props) {
+    return {};
+  });
 
-    var msg = this.props.isLoggedIn ?
-        'The current route is ' + this.props.route :
-        'Log in to get started';
+  var Wiki = createConnectedComponent(require('./wiki'), [], function (stores, props) {
+    return {};
+  });
 
-    return (
-        <div>
-        {msg}
-      </div>
-    );
-  }
-})
+  return React.createClass({
+    render: function () {
+      console.log('render: MainContent', this.props);
 
-module.exports = MainContent;
+      if (!this.props.isLoggedIn) {
+        return <div>Log in to get started</div>;
+      }
+
+      var componentsByRoute = {
+        '/': Charts,
+        '/wiki': Wiki
+      };
+
+      var Component = componentsByRoute[this.props.route];
+      if (!Component) { return null; }
+
+
+      return <Component />;
+    }
+  });
+}
+
+module.exports = setup;
