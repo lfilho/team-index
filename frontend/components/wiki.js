@@ -63,7 +63,6 @@ module.exports = React.createClass({
 
   onClickSave: function (event) {
     event.preventDefault();
-    console.log('save');
 
     var id = this.state.id;
     var type = this.refs.typeField.getDOMNode().value.trim();
@@ -88,7 +87,7 @@ module.exports = React.createClass({
     var doc = isLoaded && this.props.docs[id];
     var isLoading = id && !doc;
     var exists = doc && doc._type;
-    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={doc._type} readOnly={!!doc._type} />;
+    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={doc._type} readOnly={!!exists} />;
 
     var bodyField;
     var preview;
@@ -118,7 +117,7 @@ module.exports = React.createClass({
     return (
       <div className="wiki">
         <form className="edit">
-          <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} />
+          <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} readOnly={!!exists} />
           {typeField}
           {bodyField}
 
