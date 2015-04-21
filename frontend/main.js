@@ -72,6 +72,24 @@ actions.wikiLoad = function (args) {
   });
 };
 
+var assign = require('object-assign');
+var archieml = require('archieml');
+actions.wikiSave = function (args) {
+  var doc = assign(archieml.load(args.body), {
+    _id: args.id,
+    _type: args.type,
+  });
+
+  xhr({
+    uri: '/api/entries',
+    method: 'POST',
+    json: doc
+  }, function (err, resp, body) {
+    if (err) { return console.error(err); }
+    if (resp.statusCode !== 200) { return console.error(new Error('save failed')); }
+  });
+};
+
 actions.login = function (args) {
   location.href = '/login';
 };
