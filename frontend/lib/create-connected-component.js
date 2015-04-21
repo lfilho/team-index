@@ -43,13 +43,13 @@ function setup (stores, actions) {
         this.setState(loadState(stores, this.props));
       },
 
-      onAction: function (type, args) {
+      onAction: function (type, args, cb) {
         if (!actions.hasOwnProperty(type)) {
           console.error('Unknown action', type);
           return;
         }
 
-        actions[type](args);
+        actions[type](args, cb);
       },
 
       render: function () {
