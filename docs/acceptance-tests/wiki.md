@@ -10,6 +10,7 @@ Actions:
 - enter the ID of an existing doc into the "ID" field
 - click the "load" button
 - expect to see the "Type" and "Body" fields populated with doc state, and the "Type" field appear
+- expect the "ID" and "Type" fields to be readonly
 
 Creating a new doc
 ----
@@ -21,3 +22,10 @@ Actions:
 - enter data into "Type" and "Body" fields
 - click "Save"
 - expect to see a message indicating that the doc was saved
+
+Live preview
+----
+
+Actions:
+- after loading a doc, update the "Body" with data in ArchieML format
+- expect to see the Preview update as you type
