@@ -74,7 +74,9 @@ actions.wikiLoad = function (args) {
 
 var assign = require('object-assign');
 var archieml = require('archieml');
-actions.wikiSave = function (args) {
+actions.wikiSave = function (args, cb) {
+  cb = cb || function () {};
+
   var doc = assign(archieml.load(args.body), {
     _id: args.id,
     _type: args.type,
@@ -85,8 +87,10 @@ actions.wikiSave = function (args) {
     method: 'POST',
     json: doc
   }, function (err, resp, body) {
-    if (err) { return console.error(err); }
-    if (resp.statusCode !== 200) { return console.error(new Error('save failed')); }
+    if (err) { return cb(err); }
+    if (resp.statusCode !== 200) { return cb(new Error('save failed')); }
+
+    cb();
   });
 };
 

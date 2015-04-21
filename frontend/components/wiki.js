@@ -69,7 +69,10 @@ module.exports = React.createClass({
     var id = this.state.id;
     var type = this.refs.typeField.getDOMNode().value.trim();
     var body = this.state.body;
-    this.props.actionCallback('wikiSave', { id, type, body });
+    this.props.actionCallback('wikiSave', { id, type, body }, function (err) {
+      if (err) { return alert('Error: Failed to save the doc'); }
+      alert('Saved');
+    });
   },
 
   componentWillReceiveProps: function (nextProps) {
