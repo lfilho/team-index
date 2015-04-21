@@ -29,7 +29,8 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       id: null,
-      body: null
+      body: null,
+      type: null
     };
   },
 
@@ -39,8 +40,9 @@ module.exports = React.createClass({
       return this.setState({ id });
     }
 
+    var type = doc._type;
     var body = convertDocToArchie(doc);
-    this.setState({ id, body });
+    this.setState({ id, body, type });
 
     // also need to overwrite the dom value directly
     var ref = this.refs.bodyField;
@@ -81,13 +83,18 @@ module.exports = React.createClass({
     this.setState({ body });
   },
 
+  onChangeType: function (event) {
+    var type = event.target.value.trim();
+    this.setState({ type });
+  },
+
   render: function () {
     var id = this.state.id;
     var isLoaded = id && this.props.docs.hasOwnProperty(id);
     var doc = isLoaded && this.props.docs[id];
     var isLoading = id && !doc;
     var exists = doc && doc._type;
-    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={doc._type} readOnly={!!exists} />;
+    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={this.state.type} onChange={this.onChangeType} readOnly={!!exists} />;
 
     var bodyField;
     var preview;
@@ -102,7 +109,7 @@ module.exports = React.createClass({
       buttons = (
         <div className="buttons">
           <button type="reset" name="cancel" onClick={this.onClickCancel}>Cancel</button>
-          <button type="submit" name="save" onClick={this.onClickSave}>Save</button>
+          <button type="submit" name="save" onClick={this.onClickSave} disabled={!this.state.type}>Save</button>
         </div>
       );
     }
