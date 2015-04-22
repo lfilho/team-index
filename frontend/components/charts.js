@@ -1,11 +1,15 @@
 var React = require('react');
 
+var TeamSizeChart = require('./charts/team-size');
+var EndOfContractChart = require('./charts/end-of-contract');
+
 module.exports = React.createClass({
   render: function () {
-    console.log('render: Charts', this.props);
-
     return (
-      <div>Charts go here</div>
+      <div className="charts">
+        <TeamSizeChart />
+        <EndOfContractChart />
+      </div>
     );
   }
 });
