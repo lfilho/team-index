@@ -5,25 +5,38 @@ team index
 
 See [the test cases](./tests/index.js) for example usage.
 
-Install and run
+Install
 ----
+
+First, install iojs. If you're running a recent version of nvm, `nvm install iojs && nvm use iojs` will suffice.
+
+Then, run the following:
 
 ```
 npm install
 gem install sass
 npm run build-watch &
-iojs index.js
 ```
 
 See [[Team Index]] docs in [./index.js](./index.js) for more info.
 
-
-To do
+Running the example
 ----
 
-- trial archieml format for inputs
-- add option to automatically catchup
+```
+iojs example.js --source=SOURCE_FILENAME --team=TEAM_ID --ts=TIMESTAMP
+```
 
+Where:
+- `SOURCE_FILENAME` points to a `.ndjson` file.
+- `TEAM_ID` matches one of the teams in your source data
+- `TIMESTAMP` is the date in milliseconds (eg. `Date.now()`)
+
+Try it out with the test data:
+
+```
+iojs example.js --source=test-entries.ndjson --team=ATeam --ts=1428471302421
+```
 
 FAQ
 ----
