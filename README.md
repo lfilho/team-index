@@ -10,7 +10,7 @@ Install and run
 
 ```
 npm install
-gem install scss
+gem install sass
 npm run build-watch &
 iojs index.js
 ```
