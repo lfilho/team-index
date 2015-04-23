@@ -37,6 +37,7 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   require('./lib/auth-routes')(router, sessionStore, config.auth);
   require('./lib/page-routes')(router, sessionStore);
   require('./lib/data-api-routes')(router, sessionStore, db, docIndex);
+  require('./lib/chart-api-routes')(router, sessionStore, db, docIndex);
 
   // - start the http server
   httpServer.listen(config.port);
