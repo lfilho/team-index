@@ -13,12 +13,14 @@ function createDataSeries (points) {
     });
   });
 
+  // get a list of team IDs and initialize totals for each team
   var teamIds = arrayFrom(teamIdSet);
   var teamTotals = {};
   teamIds.forEach(function (teamId) {
     teamTotals[teamId] = [];
   });
 
+  // create the list of totals by team
   points.forEach(function (point) {
     var teams = point.data.teams;
     teamIds.forEach(function (teamId) {
@@ -27,6 +29,12 @@ function createDataSeries (points) {
     });
   });
 
+  // sort teamIds by hours (just looking at first data point)
+  teamIds.sort(function (a, b) {
+    return teamTotals[a][0] > teamTotals[b][0] ? 1 : -1;
+  });
+
+  // format as highcharts series
   var teams = points[0].data.teams;
   teamIds.forEach(function (teamId) {
     var team = teams[teamId];
