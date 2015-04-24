@@ -5,20 +5,8 @@
 Config
 ====
 
-Environment variables
-----
-
-To avoid committing passwords to the repo it's recommended to create a gitignored file called `setup-env`, eg.
-
-```
-export BASE_URL=http://localhost:8000
-export GOOGLE_CLIENT=...
-export GOOGLE_SECRET=...
-```
-
-Then to initialize the environment run `source setup-env`.
-
 */
+require('dotenv').load();
 let path = require('path');
 const config = {
   port: process.env.PORT || 8000,
@@ -30,12 +18,7 @@ const config = {
     Authentication
     ----
 
-    The environment variables needed for auth are:
-    - `GOOGLE_CLIENT` (clientID for google OAuth)
-    - `GOOGLE_SECRET` (secret for google OAuth)
-    - `BASE_URL` (base URL for the site, eg. `http://localhost:8000`)
-
-    For development you can create your own clienID and secret here: https://console.developers.google.com/project
+    The environment variables configuration needed for auth are are described in [./env.example](./.env.example) file.
 
   */
   auth: {
