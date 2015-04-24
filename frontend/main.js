@@ -26,7 +26,7 @@ stores.auth.isLoggedIn = function () {
 
 // ----
 
-var currentRoute = location.hash.replace(/^\#/, '');
+var currentRoute = location.hash.replace(/^\#/, '') || '/';
 stores.route = new Store({
   current: currentRoute
 });
