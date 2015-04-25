@@ -1,6 +1,8 @@
 var React = require('react');
 var archieml = require('archieml');
 
+const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
+
 function convertDocToArchie (doc) {
   var lines = Object.keys(doc).map(function (key) {
     // ignore reserved keys
@@ -60,7 +62,10 @@ module.exports = React.createClass({
 
   onClickCancel: function (event) {
     event.preventDefault();
-    this.setState({ id: null });
+    let shouldCancel = !this.hasChanged || (this.hasChanged && confirm(UNSAVED_CHANGES_MESSAGE));
+    if (shouldCancel) {
+      this.setState({ id: null });
+    }
   },
 
   onClickSave: function (event) {
@@ -81,14 +86,34 @@ module.exports = React.createClass({
     }
   },
 
+  componentDidMount: function () {
+    window.addEventListener('beforeunload', this.unloadListener);
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('beforeunload', this.unloadListener);
+  },
+
+  // NOTE: Various mobile browsers will skip the confirmation prompt and unload anyway.
+  // See: https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+  unloadListener: function (e) {
+    if (this.hasChanged) {
+      let event = e || window.event;
+      event.returnValue = UNSAVED_CHANGES_MESSAGE;
+      return event.returnValue;
+    }
+  },
+
   onChangeBody: function (event) {
     var body = event.target.value.trim();
     this.setState({ body });
+    this.hasChanged = true;
   },
 
   onChangeType: function (event) {
     var type = event.target.value.trim();
     this.setState({ type });
+    this.hasChanged = true;
   },
 
   render: function () {
@@ -97,9 +122,11 @@ module.exports = React.createClass({
     var doc = isLoaded && this.props.docs[id];
     var isLoading = id && !doc;
     var exists = doc && doc._type;
-    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={this.state.type} onChange={this.onChangeType} readOnly={!!exists} />;
 
+    var idField = <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} readOnly={!!exists} />
+    var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={this.state.type} onChange={this.onChangeType} readOnly={!!exists} />;
     var bodyField;
+
     var preview;
 
     if (doc) {
@@ -127,7 +154,7 @@ module.exports = React.createClass({
     return (
       <div className="wiki">
         <form className="edit">
-          <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} readOnly={!!exists} />
+          {idField}
           {typeField}
           {bodyField}
 
