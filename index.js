@@ -41,5 +41,5 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
 
   // - start the http server
   httpServer.listen(config.port);
-  console.log('ready on :%d', config.port);
+  console.log('ready on http://localhost:%d', config.port);
 });

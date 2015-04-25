@@ -3,3 +3,4 @@ node_modules
 .sessions
 .sass-cache
 static/dist
+.env
