@@ -12,6 +12,7 @@ const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
   sessionDbFile: './.sessions',
+  emailWhitelist: require('./.email-whitelist.json'),
 
   /*
 
