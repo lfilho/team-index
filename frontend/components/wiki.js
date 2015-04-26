@@ -38,10 +38,13 @@ module.exports = React.createClass({
 
   populateForm: function (id, props) {
     var doc = props.docs[id];
+
+    // Create mode:
     if (!doc) {
       return this.setState({ id });
     }
 
+    // Load / Edit mode:
     var type = doc._type;
     var body = convertDocToArchie(doc);
     this.setState({ id, body, type });
@@ -49,6 +52,10 @@ module.exports = React.createClass({
     // also need to overwrite the dom value directly
     var ref = this.refs.bodyField;
     if (ref) { ref.getDOMNode().value = body; }
+  },
+
+  lockField: function (fieldRef) {
+    this.refs[fieldRef].getDOMNode().readOnly = true;
   },
 
   onClickLoad: function (event) {
@@ -70,12 +77,15 @@ module.exports = React.createClass({
 
   onClickSave: function (event) {
     event.preventDefault();
+    var self = this;
 
     var id = this.state.id;
     var type = this.refs.typeField.getDOMNode().value.trim();
     var body = this.state.body;
     this.props.actionCallback('wikiSave', { id, type, body }, function (err) {
       if (err) { return alert('Error: Failed to save the doc'); }
+
+      self.lockField('typeField');
       alert('Saved');
     });
   },
@@ -123,7 +133,7 @@ module.exports = React.createClass({
     var isLoading = id && !doc;
     var exists = doc && doc._type;
 
-    var idField = <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} readOnly={!!exists} />
+    var idField = <input ref="idField" name="id" placeholder="ID" autoFocus={true} defaultValue={id} readOnly={!!id} />
     var typeField = doc && <input ref="typeField" name="type" placeholder="Type" value={this.state.type} onChange={this.onChangeType} readOnly={!!exists} />;
     var bodyField;
 
