@@ -1,5 +1,6 @@
 var React = require('react');
 var archieml = require('archieml');
+var validator = require('../../lib/util/validation');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
@@ -54,6 +55,12 @@ module.exports = React.createClass({
   onClickLoad: function (event) {
     event.preventDefault();
     var id = this.refs.idField.getDOMNode().value.trim();
+
+    if (!validator.isValidDbKey(id)) {
+      alert('ID can only have letters, numbers and dashes.');
+      return;
+    }
+
     this.props.actionCallback('wikiLoad', { id });
 
     // populate the form immediately, in case we already have the doc in memory
@@ -74,6 +81,12 @@ module.exports = React.createClass({
     var id = this.state.id;
     var type = this.refs.typeField.getDOMNode().value.trim();
     var body = this.state.body;
+
+    if (!validator.isValidDbKey(id, type)) {
+      alert('ID and Type can only have letters, numbers and dashes.');
+      return;
+    }
+
     this.props.actionCallback('wikiSave', { id, type, body }, function (err) {
       if (err) { return alert('Error: Failed to save the doc'); }
       alert('Saved');

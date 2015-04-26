@@ -41,7 +41,7 @@
     "build-css": "scss frontend/styles/main.scss > static/dist/main.css",
     "build-js": "browserify -t babelify frontend/main.js > static/dist/main.js",
     "build-watch": "npm run pre-build && npm run build-css && watchify -t babelify -d -v -o static/dist/main.js frontend/main.js",
-    "test": "tape tests/"
+    "test": "tape tests/**/*.js"
   },
   "repository": {
     "type": "git",
