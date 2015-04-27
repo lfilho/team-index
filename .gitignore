@@ -4,3 +4,4 @@ node_modules
 .sass-cache
 static/dist
 .env
+.email-whitelist.json

@@ -5,19 +5,36 @@ team index
 
 See [the test cases](./tests/index.js) for example usage.
 
-Install
+Installation
 ----
 
-First, install iojs. If you're running a recent version of nvm, `nvm install iojs && nvm use iojs` will suffice.
+First, install iojs. Using a recent version of nvm:
 
-Next set up your environment config by following the instructions in [.env.example](./.env.example).
+```
+nvm install iojs
+nvm use iojs
+```
 
-Then, run the following:
+And then:
 
 ```
 npm install
 gem install sass
+```
+
+Configuration
+----
+
+1. Duplicate `.env.example` and `.email-whitelist.json.example`
+2. Remove the `.example` suffix of each one
+3. Change theirs contents accordingly (note: they are safely gitignored).
+
+Running the web server
+----
+
+```
 npm run build-watch &
+iojs .
 ```
 
 See [[Team Index]] docs in [./index.js](./index.js) for more info.
