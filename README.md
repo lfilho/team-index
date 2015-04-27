@@ -10,6 +10,8 @@ Install
 
 First, install iojs. If you're running a recent version of nvm, `nvm install iojs && nvm use iojs` will suffice.
 
+Next set up your environment config by following the instructions in [.env.example](./.env.example).
+
 Then, run the following:
 
 ```

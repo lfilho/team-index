@@ -7,7 +7,7 @@ Team Index
 
 This module is the application entry point.
 
-Some enviroment variables are expected as described below in [[ Config ][ Environment variables ]].
+Some enviroment variables are expected as described in [[ Config ][ Environment variables ]].
 
 After initializing the environment, start the application with `iojs index.js`
 
