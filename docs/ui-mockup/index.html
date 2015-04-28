@@ -3,31 +3,67 @@
   <head>
     <link href="team-index-ui.css" rel="stylesheet">
   </head>
-  <body>
+  <body class="state-init">
 
-    <div class="form">
+    <form class="search">
+      <input type="text" name="search" placeholder="Search...">
+    </form>
+
+    <form class="create">
+      <h3>Create a doc</h3>
       <div class="id">
         <input type="text" name="id" placeholder="ID">
       </div>
 
-      <div class="type">
-        <input type="text" name="type" placeholder="TYPE">
+      <div class="type" style="background: #FFF; padding: 5px 10px;">
+        <select name="type">
+          <option>- Choose a Type -</option>
+          <option>team</option>
+          <option>person</option>
+          <option>wikiDoc</option>
+        </select>
       </div>
 
-      <div class="body">
-        <textarea name="body" placeholder="BODY"></textarea>
+      <div style="padding: 5px 10px;">
+        <button type="reset">Cancel</button>
+        <button name="edit">Create</button>
       </div>
+    </form>
+
+    <div class="matches">
+      <h3>3 matches</h3>
+
+      <div class="match">
+        <a href="#">foo1</a> (person)
+      </div>
+
+      <div class="match">
+        <a href="#">foo2</a> (person)
+      </div>
+
+      <div class="match">
+        <a href="#">foo3</a> (team)
+      </div>
+    </div>
+
+    <div class="container">
+      <h1 class="header" style="padding: 0 10px;">
+        MyTeam (team)
+
+        <span class="view-buttons">
+          <button name="edit">Edit</button>
+        </span>
+
+        <span class="edit-buttons">
+          <button type="reset">Cancel</button>
+          <button type="submit">Save</button>
+        </span>
+      </h1>
 
       <div class="preview">
-        <label>PREVIEW</label>
-      </div>
-
-      <script type="text/html" id="preview-example">
-        <h1>MyTeam</h1>
-
         <pre><code>
-title: My Team
-startedAt: 0
+  title: My Team
+  startedAt: 0
         </code></pre>
 
         <p>Preview also whatever custom stuff is set up for docs with this type. Could be usage instructions, or helper shortcuts.</p>
@@ -40,8 +76,18 @@ startedAt: 0
         </ul>
 
         <button>+</button> Create a <strong>teamMembership</strong>
-      </script>
+      </div>
+
+      <form class="edit">
+        <div class="body">
+          <textarea name="body" placeholder="BODY">
+title: My Team
+startedAt: 0</textarea>
+        </div>
+      </form>
+
     </div>
+
     <script src="team-index-ui.js"></script>
   </body>
 </html>

@@ -1,18 +1,27 @@
-var data = {
-  id: 'MyTeam',
-  type: 'team',
-  body: 'body of the doc goes here\n\ntitle: My Team'
-};
+console.log('Initial state: preview the current doc and display the Search form for navigating');
+console.log('When you Search and get an exact match, we stay on this screen and the Preview updates to show new doc');
+console.log('Options:');
+console.log('- search(): searching for a doc that does not exist');
+console.log('- edit(): edit the current doc');
 
-var previewHtml = document.getElementById('preview-example').innerHTML;
-
-function populate () {
-  Object.keys(data).forEach(function (key) {
-    var elem = document.querySelector('[name=' + key + ']');
-    elem.value = data[key];
-  });
-
-  document.querySelector('.form .preview').innerHTML = previewHtml;
+function setBodyState (state) {
+  var body = document.querySelector('body');
+  body.className = body.className.replace(/\bstate-\w+\b/, 'state-' + state);
 }
 
-console.log('Run the `populate()` function to fill in some data');
+function search () {
+  console.log('----');
+  console.log('Searching for a doc that does not exist');
+  console.log('- The Create form is pre-populated with the ID you searched for');
+  console.log('- Cancel takes you back to the previous screen');
+
+  setBodyState('search');
+  document.querySelector('[name=id]').value = 'foo';
+}
+
+function edit () {
+  console.log('----');
+  console.log('Editing a doc');
+
+  setBodyState('edit');
+}
