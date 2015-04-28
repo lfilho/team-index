@@ -6,8 +6,6 @@ var Menu = React.createClass({
   },
 
   render: function () {
-    console.log('render: Menu', this.props);
-
     if (!this.props.isLoggedIn) { return null; }
 
     var items = [];

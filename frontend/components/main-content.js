@@ -13,8 +13,6 @@ function setup (createConnectedComponent) {
 
   return React.createClass({
     render: function () {
-      console.log('render: MainContent', this.props);
-
       if (!this.props.isLoggedIn) {
         return <div className="welcome">X-TEAM DASHBOARD</div>;
       }

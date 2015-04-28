@@ -21,8 +21,6 @@ function setup (createConnectedComponent) {
 
   return React.createClass({
       render: function () {
-        console.log('render: DashboardApp', this.props);
-
         return (
           <div>
             <header>
