@@ -1,6 +1,7 @@
 var React = require('react');
 
 var arrayFrom = require('../../../lib/array-from');
+const CHART_TYPE = 'team-size';
 
 function createDataSeries (points) {
   var series = [];
@@ -113,7 +114,22 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     var self = this;
-    this.props.actionCallback('loadChart', { chartType: 'team-size' }, function (err, points) {
+    this.props.actionCallback('loadChart', { chartType: CHART_TYPE }, function (err, points) {
+      if (err) { console.log('Error loading chart:', err);}
+
+      self.setState({ points });
+    });
+  },
+
+  onClickUpdateTimeframe: function (event) {
+    event.preventDefault();
+    let self = this;
+    let to = this.refs.toField.getDOMNode().value.trim();
+    let from = this.refs.fromField.getDOMNode().value.trim();
+
+    this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
+      if (err) { console.log('Error updating chart:', err);}
+
       self.setState({ points });
     });
   },
@@ -126,8 +142,9 @@ module.exports = React.createClass({
       <div className="team-size">
         <h2>Teams</h2>
 
-        From: <input name="from" />
-        To: <input name="to" />
+        From: <input ref="fromField" name="from" />
+        To: <input ref="toField" name="to" />
+        <button name="updateTimeframe" onClick={this.onClickUpdateTimeframe}>Update timeframe</button>
 
         <div className="chart">{chart}</div>
       </div>
