@@ -1,6 +1,6 @@
 var React = require('react');
 var archieml = require('archieml');
-var validator = require('../../lib/util/validation');
+const isValidDbKey = require('../../lib/validate-db-key');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
@@ -63,7 +63,7 @@ module.exports = React.createClass({
     event.preventDefault();
     var id = this.refs.idField.getDOMNode().value.trim();
 
-    if (!validator.isValidDbKey(id)) {
+    if (!isValidDbKey(id)) {
       alert('ID can only have letters, numbers and dashes.');
       return;
     }
@@ -90,7 +90,7 @@ module.exports = React.createClass({
     var type = this.refs.typeField.getDOMNode().value.trim();
     var body = this.state.body;
 
-    if (!validator.isValidDbKey(id, type)) {
+    if (!isValidDbKey(id, type)) {
       alert('ID and Type can only have letters, numbers and dashes.');
       return;
     }
