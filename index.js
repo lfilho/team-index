@@ -40,6 +40,13 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   // - setup the rpc module
   const rpc = require('./lib/rpc')(db, indexRegistry);
 
+  // - set up the docindex and default wiki page
+  const homeDocId = 'home';
+  docIndex.catchup();
+  if (!docIndex.getDoc(homeDocId)) {
+    rpc.entries.add({ _id: homeDocId, _type: 'wikiPage', body: 'Welcome to the wiki!\n\nTry editing this page. Anything in the `body` value will be rendered as **markdown** in the preview.  Any other values are displayed in the "Extra Data" section.', foo: true, bar: false });
+  }
+
   // - setup the session storage
   let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
 
