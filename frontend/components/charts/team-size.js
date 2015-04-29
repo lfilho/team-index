@@ -26,13 +26,13 @@ function createDataSeries (points) {
     var teams = point.data.teams;
     teamIds.forEach(function (teamId) {
       var team = teams[teamId] || {};
-      teamTotals[teamId].push(team.totalHours || 0);
+      teamTotals[teamId].push([point.ts, team.totalHours || 0]);
     });
   });
 
   // sort teamIds by hours (just looking at first data point)
   teamIds.sort(function (a, b) {
-    return teamTotals[a][0] > teamTotals[b][0] ? 1 : -1;
+    return teamTotals[a][0][1] > teamTotals[b][0][1] ? 1 : -1;
   });
 
   // format as highcharts series
@@ -52,7 +52,8 @@ function createChart (series) {
   new Highcharts.Chart({
     chart: {
       renderTo: 'team-size-chart',
-      type: 'area'
+      type: 'area',
+      zoomType: 'x'
     },
     title: {
       text: ''
@@ -61,6 +62,11 @@ function createChart (series) {
       tickmarkPlacement: 'on',
       title: {
         enabled: false
+      },
+      type: 'datetime',
+      labels: {
+        rotation: 45,
+        align: 'left'
       }
     },
     yAxis: {
@@ -124,8 +130,8 @@ module.exports = React.createClass({
   onClickUpdateTimeframe: function (event) {
     event.preventDefault();
     let self = this;
-    let to = this.refs.toField.getDOMNode().value.trim();
-    let from = this.refs.fromField.getDOMNode().value.trim();
+    let to = Date.parse(this.refs.toField.getDOMNode().value.trim());
+    let from = Date.parse(this.refs.fromField.getDOMNode().value.trim());
 
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
       if (err) { console.log('Error updating chart:', err);}
@@ -142,8 +148,8 @@ module.exports = React.createClass({
       <div className="team-size">
         <h2>Teams</h2>
 
-        From: <input ref="fromField" name="from" />
-        To: <input ref="toField" name="to" />
+        From: <input ref="fromField" name="from" placeholder="YYYY-MM-DD"/>
+        To: <input ref="toField" name="to" placeholder="YYYY-MM-DD" />
         <button name="updateTimeframe" onClick={this.onClickUpdateTimeframe}>Update timeframe</button>
 
         <div className="chart">{chart}</div>
