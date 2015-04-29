@@ -41,7 +41,17 @@ const config = {
   staticFiles: {
     dir: path.join(__dirname, 'static'),
     cacheEnabled: (process.env.NODE_ENV === 'production')
-  }
+  },
+
+  /*
+
+    Repl
+    ----
+
+    A repl can be enabled, useful for development.
+
+  */
+  useRepl: !!process.env.REPL
 };
 
 module.exports = config;

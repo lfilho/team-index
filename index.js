@@ -56,4 +56,16 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   // - start the http server
   httpServer.listen(config.port);
   console.log('ready on http://localhost:%d', config.port);
+
+  // - start the repl (if enabled)
+  if (config.useRepl) {
+    const r = require('./lib/start-repl');
+    r.context.rpc = rpc;
+    r.context.app = {
+      indexRegistry: indexRegistry
+    };
+    r.on('exit', function () {
+      httpServer.close();
+    });
+  }
 });
