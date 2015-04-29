@@ -55,9 +55,12 @@ header {
 }
 
 header .menu {
+  flex-grow: 1;
+  align-items: flex-start;
   margin-left: 60px;
 
   ul {
+    display: flex;
     list-style-type: none;
     margin: 3px 0 0 0;
   }
@@ -65,6 +68,26 @@ header .menu {
   li {
     display: inline;
     margin-right: 15px;
+  }
+
+  li.search {
+    flex-grow: 1;
+  }
+
+  li.search input {
+    flex-grow: 1;
+    width: 90%;
+    padding: 0;
+    font-size: 15px;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    color: #999;
+    outline: none;
+  }
+
+  li.search input:focus {
+    border-bottom: 1px solid #000;
+    color: #000;
   }
 }
 

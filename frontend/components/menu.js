@@ -5,6 +5,14 @@ var Menu = React.createClass({
     this.props.actionCallback('setRoute', { route: route });
   },
 
+  onSearch: function (event) {
+    event.preventDefault();
+
+    const elem = this.refs.search.getDOMNode();
+    const value = elem.value;
+    this.props.actionCallback('search', { q: value });
+  },
+
   render: function () {
     if (!this.props.isLoggedIn) { return null; }
 
@@ -35,6 +43,14 @@ var Menu = React.createClass({
         </li>
       );
     }.bind(this));
+
+    itemElems.push(
+      <li key="search" className="search">
+        <form onSubmit={this.onSearch}>
+          <input ref="search" placeholder="Search..." />
+        </form>
+      </li>
+    );
 
     return (
       <ul>{itemElems}</ul>

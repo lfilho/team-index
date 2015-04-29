@@ -84,6 +84,13 @@ module.exports = function (stores) {
     });
   };
 
+  actions.search = function (args) {
+    stores.route.set({
+      current: '/wiki',
+      q: args.q
+    });
+  },
+
   actions.loadChart = function (args, cb) {
     xhr({
       uri: '/api/charts/' + args.chartType
