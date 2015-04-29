@@ -36,6 +36,10 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
     // for team memberships we record events of when the membership started or ended
     teamMembership: ['startedAt', 'endedAt']
   }));
+
+  // - setup the rpc module
+  const rpc = require('./lib/rpc')(db, indexRegistry);
+
   // - setup the session storage
   let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
 
@@ -46,8 +50,8 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   require('./lib/static-routes')(router, config.staticFiles);
   require('./lib/auth-routes')(router, sessionStore, config.auth);
   require('./lib/page-routes')(router, sessionStore);
-  require('./lib/data-api-routes')(router, sessionStore, db, docIndex);
-  require('./lib/chart-api-routes')(router, sessionStore, db, docIndex);
+  require('./lib/data-api-routes')(router, sessionStore, rpc);
+  require('./lib/chart-api-routes')(router, sessionStore, rpc);
 
   // - start the http server
   httpServer.listen(config.port);
