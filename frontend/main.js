@@ -28,7 +28,8 @@ stores.auth.isLoggedIn = function () {
 
 var currentRoute = location.hash.replace(/^\#/, '') || '/';
 stores.route = new Store({
-  current: currentRoute
+  current: currentRoute,
+  docId: 'home'
 });
 
 // ----
