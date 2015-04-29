@@ -1,47 +1,43 @@
 .wiki {
+  margin-top: 20px;
+  padding: 0 10px;
   display: flex;
   flex-flow: wrap;
   align-items: stretch;
+}
 
-  .edit,
-  .preview {
-    flex-grow: 1;
-    min-width: 500px;
+
+.wiki h1 {
+  margin: 0;
+  width: 100%;
+
+  .type {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0 0 0 10px;
+  }
+
+  button {
+    margin-left: 10px;
   }
 }
 
 .wiki .edit {
-  position: relative;
-
-  .buttons {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-
-    button {
-      margin-right: 5px;
-    }
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #CCC;
-    padding: 10px;
-  }
-
   textarea {
     min-height: 100px;
+    min-width: 300px;
+    margin-right: 10px;
+    background: #FFF;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    padding: 1em;
+    font-family: Courier;
+    font-size: 13px;
+    outline: none;
   }
 }
 
 .wiki .preview {
-  padding: 10px;
-  font-family: Courier;
-
-  h1 {
-    margin: 0 0 10px 0;
-  }
+  flex-grow: 1;
+  min-width: 400px;
 }
