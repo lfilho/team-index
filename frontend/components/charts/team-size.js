@@ -1,6 +1,7 @@
 var React = require('react');
 
 var arrayFrom = require('../../../lib/array-from');
+const CHART_TYPE = 'team-size';
 
 function createDataSeries (points) {
   var series = [];
@@ -25,13 +26,13 @@ function createDataSeries (points) {
     var teams = point.data.teams;
     teamIds.forEach(function (teamId) {
       var team = teams[teamId] || {};
-      teamTotals[teamId].push(team.totalHours || 0);
+      teamTotals[teamId].push([point.ts, team.totalHours || 0]);
     });
   });
 
   // sort teamIds by hours (just looking at first data point)
   teamIds.sort(function (a, b) {
-    return teamTotals[a][0] > teamTotals[b][0] ? 1 : -1;
+    return teamTotals[a][0][1] > teamTotals[b][0][1] ? 1 : -1;
   });
 
   // format as highcharts series
@@ -51,7 +52,8 @@ function createChart (series) {
   new Highcharts.Chart({
     chart: {
       renderTo: 'team-size-chart',
-      type: 'area'
+      type: 'area',
+      zoomType: 'x'
     },
     title: {
       text: ''
@@ -60,6 +62,11 @@ function createChart (series) {
       tickmarkPlacement: 'on',
       title: {
         enabled: false
+      },
+      type: 'datetime',
+      labels: {
+        rotation: 45,
+        align: 'left'
       }
     },
     yAxis: {
@@ -113,7 +120,22 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     var self = this;
-    this.props.actionCallback('loadChart', { chartType: 'team-size' }, function (err, points) {
+    this.props.actionCallback('loadChart', { chartType: CHART_TYPE }, function (err, points) {
+      if (err) { console.log('Error loading chart:', err);}
+
+      self.setState({ points });
+    });
+  },
+
+  onClickUpdateTimeframe: function (event) {
+    event.preventDefault();
+    let self = this;
+    let to = Date.parse(this.refs.toField.getDOMNode().value.trim());
+    let from = Date.parse(this.refs.fromField.getDOMNode().value.trim());
+
+    this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
+      if (err) { console.log('Error updating chart:', err);}
+
       self.setState({ points });
     });
   },
@@ -126,8 +148,9 @@ module.exports = React.createClass({
       <div className="team-size">
         <h2>Teams</h2>
 
-        From: <input name="from" />
-        To: <input name="to" />
+        From: <input ref="fromField" name="from" placeholder="YYYY-MM-DD"/>
+        To: <input ref="toField" name="to" placeholder="YYYY-MM-DD" />
+        <button name="updateTimeframe" onClick={this.onClickUpdateTimeframe}>Update timeframe</button>
 
         <div className="chart">{chart}</div>
       </div>

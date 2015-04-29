@@ -1,4 +1,5 @@
 var React = require('react');
+var querystring = require('querystring');
 
 /*
 
@@ -120,8 +121,13 @@ actions.setRoute = function (args) {
 };
 
 actions.loadChart = function (args, cb) {
+  let endpoint = '/api/charts/' + args.chartType;
+  delete args.chartType;
+  let params = querystring.stringify(args);
+  params = params ? '?' + params : '';
+
   xhr({
-    uri: '/api/charts/' + args.chartType
+    uri: endpoint + params
   }, function (err, resp, body) {
     if (err) { return cb(err); }
     if (resp.statusCode !== 200) { return cb(new Error(resp)); }
