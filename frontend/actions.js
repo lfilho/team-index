@@ -2,6 +2,7 @@
 
 const archieml = require('archieml');
 const assign = require('object-assign');
+const querystring = require('querystring');
 const xhr = require('xhr');
 
 module.exports = function (stores) {
@@ -94,8 +95,13 @@ module.exports = function (stores) {
   },
 
   actions.loadChart = function (args, cb) {
+    const endpoint = '/api/charts/' + args.chartType;
+    delete args.chartType;
+    const params = querystring.stringify(args);
+    const uri = endpoint + (params ? '?' : '') + params;
+
     xhr({
-      uri: '/api/charts/' + args.chartType
+      uri: params
     }, function (err, resp, body) {
       if (err) { return cb(err); }
       if (resp.statusCode !== 200) { return cb(new Error(resp)); }
