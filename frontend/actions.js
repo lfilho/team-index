@@ -101,7 +101,7 @@ module.exports = function (stores) {
     const uri = endpoint + (params ? '?' : '') + params;
 
     xhr({
-      uri: params
+      uri: uri
     }, function (err, resp, body) {
       if (err) { return cb(err); }
       if (resp.statusCode !== 200) { return cb(new Error(resp)); }
