@@ -117,12 +117,17 @@ module.exports = React.createClass({
       return;
     }
 
-    const doc = this.props.docs[this.props.id];
-    const body = convertDocToArchie(doc);
-    this.setState({
-      editing: false,
-      body: body
-    });
+    const newState = {
+      editing: false
+    };
+
+    if (this.state.hasChanged) {
+      const doc = this.props.docs[this.props.id];
+      const body = convertDocToArchie(doc);
+      newState.body = body;
+    }
+
+    this.setState(newState);
   },
 
   onClickSave: function (event) {
@@ -142,8 +147,9 @@ module.exports = React.createClass({
 
   _renderHeaderButtons: function () {
     if (this.state.editing) {
+      const cancelLabel = this.state.hasChanged ? 'Cancel' : 'Close';
       return [
-        <button key="cancel" type="reset" onClick={this.onClickCancel}>Cancel</button>,
+        <button key="cancel" type="reset" onClick={this.onClickCancel}>{cancelLabel}</button>,
         <button key="save" type="submit" onClick={this.onClickSave}>Save</button>
       ];
     }
