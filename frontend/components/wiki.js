@@ -11,7 +11,8 @@ function convertDocToArchie (doc) {
     if (key[0] === '_') { return; }
 
     const val = doc[key];
-    return key + ': ' + val + (val.indexOf('\n') > 0 ? '\n:end' : '');
+    const isMultiLine = (typeof val === 'string' && val.indexOf('\n') > 0);
+    return key + ': ' + val + (isMultiLine ? '\n:end' : '');
   });
 
   return lines.filter(Boolean).join('\n');
@@ -163,7 +164,6 @@ module.exports = React.createClass({
   render: function () {
     const id = this.props.id;
     const isLoaded = this.props.docs.hasOwnProperty(id);
-    console.log('ID', id, isLoaded);
 
     if (!isLoaded) {
       return (
