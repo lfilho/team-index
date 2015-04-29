@@ -26,6 +26,16 @@ Startup procedure
 require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
   if (err) { throw err; }
 
+  // - setup the index registry
+  const indexRegistry = new Map();
+  indexRegistry.set('docs', docIndex);
+  indexRegistry.set('timeline', require('./lib/timeline-index')(docIndex, {
+    // for teams we record events of when the team started or ended
+    team: ['startedAt', 'endedAt'],
+
+    // for team memberships we record events of when the membership started or ended
+    teamMembership: ['startedAt', 'endedAt']
+  }));
   // - setup the session storage
   let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
 
