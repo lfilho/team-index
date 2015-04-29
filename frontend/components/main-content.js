@@ -5,8 +5,11 @@ function setup (createConnectedComponent) {
     return {};
   });
 
-  var Wiki = createConnectedComponent(require('./wiki'), ['wiki'], function (stores, props) {
+  var Wiki = createConnectedComponent(require('./wiki'), ['route', 'wiki'], function (stores, props) {
+    const id = stores.route.get().docId;
+
     return {
+      id: id,
       docs: stores.wiki.get()
     };
   });
