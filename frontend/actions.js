@@ -85,9 +85,11 @@ module.exports = function (stores) {
   };
 
   actions.search = function (args) {
+    // TODO: if the search query contains chars that are invalid for a doc ID,
+    // assume it's a search rather than a doc
     stores.route.set({
       current: '/wiki',
-      q: args.q
+      docId: args.q
     });
   },
 
