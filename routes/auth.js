@@ -2,8 +2,8 @@
 
 let genericSession = require('generic-session');
 let redirect = require('redirecter');
-let loadGoogleProfile = require('./load-google-profile');
-let sendError = require('./send-error');
+let loadGoogleProfile = require('../lib/load-google-profile');
+let sendError = require('../lib/send-error');
 
 function isEmailWhitelisted(loginEmail) {
   const EMAIL_WHITELIST = require('../config').emailWhitelist;
@@ -12,7 +12,7 @@ function isEmailWhitelisted(loginEmail) {
 }
 
 function setup (router, sessionStore, config) {
-  let oauth = require('./oauth')({
+  let oauth = require('../lib/oauth')({
     clientId: config.clientId,
     secret: config.secret,
     baseUrl: config.baseUrl,

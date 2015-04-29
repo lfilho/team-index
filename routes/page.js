@@ -2,7 +2,7 @@
 
 let h = require('hyperscript');
 let genericSession = require('generic-session');
-let pageTemplate = require('./page-template');
+let pageTemplate = require('../lib/page-template');
 
 function addRoutes (router, sessionStore) {
   router.addRoute('/', function (req, res) {

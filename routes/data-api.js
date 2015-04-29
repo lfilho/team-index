@@ -2,11 +2,11 @@
 
 let concat = require('concat-stream');
 let sendJson = require('send-data/json');
-let sendError = require('./send-error');
-let addEntry = require('./add-entry');
+let sendError = require('../lib/send-error');
+let addEntry = require('../lib/add-entry');
 
 function addRoutes (router, sessionStore, rpc) {
-  let restrict = require('./restrict').bind(null, sessionStore);
+  let restrict = require('../lib/restrict').bind(null, sessionStore);
 
   router.addRoute('/api/entries', {
     POST: restrict(function (req, res) {

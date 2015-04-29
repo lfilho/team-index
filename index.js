@@ -47,11 +47,11 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   let httpServer = require('./lib/http-server')();
   let router = httpServer.router;
 
-  require('./lib/static-routes')(router, config.staticFiles);
-  require('./lib/auth-routes')(router, sessionStore, config.auth);
-  require('./lib/page-routes')(router, sessionStore);
-  require('./lib/data-api-routes')(router, sessionStore, rpc);
-  require('./lib/chart-api-routes')(router, sessionStore, rpc);
+  require('./routes/static')(router, config.staticFiles);
+  require('./routes/auth')(router, sessionStore, config.auth);
+  require('./routes/page')(router, sessionStore);
+  require('./routes/data-api')(router, sessionStore, rpc);
+  require('./routes/chart-api')(router, sessionStore, rpc);
 
   // - start the http server
   httpServer.listen(config.port);
