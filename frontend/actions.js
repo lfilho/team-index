@@ -5,49 +5,71 @@ const assign = require('object-assign');
 const querystring = require('querystring');
 const xhr = require('xhr');
 
+function loadWikiDoc (id, cb) {
+  xhr({
+    url: '/api/docs/' + id
+  }, function (err, resp, body) {
+    if (err) { return console.error(err); }
+
+    // not found: create a placeholder
+    if (resp.statusCode === 404) {
+      return cb(null, null);
+    }
+
+    if (resp.statusCode !== 200) {
+      return cb(new Error('load failed'));
+    }
+
+    let data;
+    try {
+      data = JSON.parse(body);
+    }
+    catch (e) {
+      return cb(new Error('invalid body'));
+    }
+
+    cb(null, data.doc);
+  });
+}
+
 module.exports = function (stores) {
   const actions = {};
 
-  actions.wikiLoad = function (args) {
+  actions.wikiLoad = function (args, cb) {
+    cb = cb || function () {};
+
     // don't need to load if already in memory
-    if (stores.wiki.data.hasOwnProperty(args.id)) { return; }
+    const doc = stores.wiki.data[args.id];
+    if (!!doc) {
+      return cb(null, doc);
+    }
 
-    xhr({
-      url: '/api/docs/' + args.id
-    }, function (err, resp, body) {
-      if (err) { return console.error(err); }
-
-      // not found: create a placeholder
-      if (resp.statusCode === 404) {
-        let docs = {};
-        docs[args.id] = { _id: args.id };
-        stores.wiki.set(docs);
-        return;
+    loadWikiDoc(args.id, function (err, doc) {
+      if (err) {
+        console.error(err);
+        return cb(err);
       }
 
-      if (resp.statusCode !== 200) { return console.error('load failed', resp); }
+      if (!doc) { return cb(null, null); }
 
-      var data;
-      try {
-        data = JSON.parse(body);
-      }
-      catch (e) {
-        return console.error('invalid body', resp);
-      }
-
-      var docs = {};
-      docs[args.id] = data.doc;
+      const docs = {};
+      docs[args.id] = doc;
       stores.wiki.set(docs);
+      cb(null, doc);
     });
   };
 
   actions.wikiSave = function (args, cb) {
     cb = cb || function () {};
 
-    var doc = assign(archieml.load(args.body), {
+    let doc = {
       _id: args.id,
       _type: args.type,
-    });
+    };
+
+    if (args.body) {
+      doc = assign(archieml.load(args.body), doc);
+    }
 
     xhr({
       uri: '/api/entries',
