@@ -37,6 +37,16 @@ function addRoutes (router, sessionStore, rpc) {
       });
     })
   });
+
+  router.addRoute('/api/teams/:teamId', {
+    GET: restrict(function (req, res, opts) {
+      rpc.teams.get(opts.params.teamId, function (err, team) {
+        if (err) { return sendError(res, err); }
+
+        sendJson(req, res, team);
+      });
+    })
+  });
 }
 
 module.exports = addRoutes;
