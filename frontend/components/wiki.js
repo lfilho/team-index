@@ -2,6 +2,7 @@ const React = require('react');
 const archieml = require('archieml');
 const marked = require('marked');
 const isValidDbKey = require('../../lib/validate-db-key');
+const convertDocToArchie = require('../../lib/doc-to-archie');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
