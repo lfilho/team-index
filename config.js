@@ -51,7 +51,15 @@ const config = {
     A repl can be enabled, useful for development.
 
   */
-  useRepl: !!process.env.REPL
+  useRepl: !!process.env.REPL,
+
+  /*
+
+    Wiki
+    ----
+
+  */
+  homeDocId: 'home'
 };
 
 module.exports = config;
