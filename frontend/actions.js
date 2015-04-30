@@ -140,5 +140,26 @@ module.exports = function (stores) {
     });
   };
 
+  actions.loadTeamMembers = function (args, cb) {
+    const uri = '/api/teams/' + args.teamId;
+
+    xhr({
+      uri: uri
+    }, function (err, resp, body) {
+      if (err) { return cb(err); }
+      if (resp.statusCode !== 200) { return cb(new Error(resp)); }
+
+      var data;
+      try {
+        data = JSON.parse(body);
+      }
+      catch (e) {
+        return cb(new Error('invalid body'));
+      }
+
+      cb(null, data);
+    });
+  };
+
   return actions;
 };
