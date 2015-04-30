@@ -52,16 +52,21 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       body: null,
+      loading: true,
       editing: false
     };
   },
 
   populateForm: function (id, props) {
+    const loading = false;
     var doc = props.docs[id];
-    if (!doc) { return; }
+    if (!doc) {
+      this.setState({ loading });
+      return;
+    }
 
     var body = convertDocToArchie(doc);
-    this.setState({ body });
+    this.setState({ loading, body });
   },
 
   componentWillMount: function () {
@@ -145,6 +150,24 @@ module.exports = React.createClass({
     });
   },
 
+  getFieldValue: function (ref) {
+    return this.refs[ref].getDOMNode().value;
+  },
+
+  onSubmitCreate: function (event) {
+    event.preventDefault();
+
+    const id = this.getFieldValue('idField');
+    const type = this.getFieldValue('typeField');
+
+    const self = this;
+    this.props.actionCallback('wikiSave', { id, type }, function (err) {
+      if (err) { return alert('Error: Failed to create the doc'); }
+
+      self.props.actionCallback('wikiLoad', { id });
+    });
+  },
+
   _renderHeaderButtons: function () {
     if (this.state.editing) {
       const cancelLabel = this.state.hasChanged ? 'Cancel' : 'Close';
@@ -167,11 +190,34 @@ module.exports = React.createClass({
     );
   },
 
+  _renderCreateForm: function () {
+    const typeOptions = ['wikiPage', 'person', 'team', 'teamMembership'].map(function (type, i) {
+      return <option key={i} value={type}>{type}</option>;
+    });
+
+    return (
+      <div className="wiki">
+        <form className="create" onSubmit={this.onSubmitCreate}>
+          <h2>Create a doc</h2>
+          <div>
+            <input name="id" placeholder="ID" ref="idField" defaultValue={this.props.id} />
+          </div>
+          <div>
+            <select name="type" ref="typeField">
+              <option value="">- Choose a Type -</option>
+              {typeOptions}
+            </select>
+          </div>
+          <button type="submit">Create</button>
+        </form>
+      </div>
+    );
+  },
+
   render: function () {
     const id = this.props.id;
-    const isLoaded = this.props.docs.hasOwnProperty(id);
 
-    if (!isLoaded) {
+    if (this.state.loading) {
       return (
         <div className="wiki">
           ..loading ({id})..
@@ -179,7 +225,12 @@ module.exports = React.createClass({
       );
     }
 
-    const doc = isLoaded && this.props.docs[id];
+    const exists = !!this.props.docs[id];
+    if (!exists) {
+      return this._renderCreateForm();
+    }
+
+    const doc = this.props.docs[id];
     const headerButtons = this._renderHeaderButtons();
     const editForm = this._renderEditForm();
     const preview = generatePreview(doc, this.state.body);
