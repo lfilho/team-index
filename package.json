@@ -10,7 +10,7 @@
     "concat-stream": "^1.4.8",
     "cuid": "^1.2.4",
     "dotenv": "^1.1.0",
-    "fingdex": "0.2.0",
+    "fingdex": "0.3.0",
     "generic-session": "^0.1.0",
     "hyperscript": "^1.4.6",
     "jsonwebtoken": "^5.0.0",
