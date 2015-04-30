@@ -2,6 +2,6 @@
 {"_id":"BTeam","_type":"team","title":"B-Team"}
 {"_id":"PersonOne","_type":"person","name":"Person One","email":"person1@example.com"}
 {"_id":"PersonTwo","_type":"person","name":"Person Two","email":"person2@example.com"}
-{"_id":"teamMembership!ATeam!PersonOne","_type":"teamMembership","team":"ATeam","person":"PersonOne"}
-{"_id":"teamMembership!ATeam!PersonTwo","_type":"teamMembership","team":"ATeam","person":"PersonTwo","startedAt":1428471302420}
-{"_id":"teamMembership!ATeam!PersonTwo","team":"ATeam","person":"PersonTwo","endedAt":1428471352420}
+{"_id":"teamMembership-ATeam-PersonOne","_type":"teamMembership","team":"ATeam","person":"PersonOne"}
+{"_id":"teamMembership-ATeam-PersonTwo","_type":"teamMembership","team":"ATeam","person":"PersonTwo","startedAt":1428471302420}
+{"_id":"teamMembership-ATeam-PersonTwo","team":"ATeam","person":"PersonTwo","endedAt":1428471352420}
