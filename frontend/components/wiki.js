@@ -1,52 +1,14 @@
 const React = require('react');
-const archieml = require('archieml');
-const marked = require('marked');
 const isValidDbKey = require('../../lib/validate-db-key');
 const convertDocToArchie = require('../../lib/doc-to-archie');
+const Preview = require('./wiki/preview');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
-function convertDocToArchie (doc) {
-  var lines = Object.keys(doc).map(function (key) {
-    // ignore reserved keys
-    if (key[0] === '_') { return; }
-
-    const val = doc[key];
-    const isMultiLine = (typeof val === 'string' && val.indexOf('\n') > 0);
-    return key + ': ' + val + (isMultiLine ? '\n:end' : '');
-  });
-
-  return lines.filter(Boolean).join('\n');
-}
-
-function generatePreview (doc, body) {
-  // convert body to json and back again, so we only preview valid stuff
-  let parsed = archieml.load(body);
-
-  // wikiPage renders the ".body" value as markdown
-  if (doc._type === 'wikiPage') {
-    const pageBody = parsed.body && { __html: marked(parsed.body) };
-    delete parsed.body;
-    const preview = convertDocToArchie(parsed);
-
-    return (
-      <div>
-        <div dangerouslySetInnerHTML={pageBody}/>
-
-        <h2>Extra data</h2>
-        <pre>{preview}</pre>
-      </div>
-    );
-  }
-
-  const preview = convertDocToArchie(parsed);
-  return (
-    <pre>{preview}</pre>
-  );
-}
-
 module.exports = React.createClass({
   propTypes: {
+    actionCallback: React.PropTypes.func.isRequired,
+    docs: React.PropTypes.object.isRequired,
     id: React.PropTypes.string.isRequired
   },
 
@@ -234,7 +196,6 @@ module.exports = React.createClass({
     const doc = this.props.docs[id];
     const headerButtons = this._renderHeaderButtons();
     const editForm = this._renderEditForm();
-    const preview = generatePreview(doc, this.state.body);
 
     return (
       <div className="wiki">
@@ -246,9 +207,7 @@ module.exports = React.createClass({
 
         {editForm}
 
-        <div className="preview">
-          {preview}
-        </div>
+        <Preview body={this.state.body} id={doc._id} type={doc._type} actionCallback={this.props.actionCallback} />
       </div>
     );
   }
