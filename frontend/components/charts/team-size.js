@@ -65,6 +65,7 @@ function createDataSeries (points) {
     var team = teams[teamId];
     series.push({
       name: team.title,
+      teamId: teamId,
       data: insertFlatteningPoints(teamTotals[teamId])
     });
   });
@@ -99,8 +100,17 @@ function createChart (series) {
       }
     },
     plotOptions: {
+      series: {
+        cursor: 'pointer',
+        events: {
+          click: function() {
+            window.location.hash = '/wiki/' + this.options.teamId;
+          }
+        }
+      },
       area: {
         stacking: 'normal',
+        trackByArea: true,
         lineColor: '#666666',
         lineWidth: 1,
         marker: {
