@@ -11,7 +11,7 @@ function addRoutes (router, sessionStore) {
       info = info || {};
 
       let authState = {
-        name: info.name || info.email.split('@')[0],
+        name: info.name || (info.email && info.email.split('@')[0]),
         picture: info.picture
       };
 
