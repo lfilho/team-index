@@ -3,6 +3,30 @@ var React = require('react');
 var arrayFrom = require('../../../lib/array-from');
 const CHART_TYPE = 'team-size';
 
+/*
+
+  Insert some extra points to the data series so that changes appear to happen instantly,
+  rather than ramping up gradually (since this is a more realistic representation).
+
+*/
+function insertFlatteningPoints (totals) {
+  const points = [];
+  let lastPoint;
+  totals.forEach(function (point) {
+    // insert a point 1 ms prior to the real one, with the same value as the previous
+    if (lastPoint) {
+      points.push([
+        point[0] - 1,
+        lastPoint[1]
+      ]);
+    }
+
+    lastPoint = point;
+    points.push(point);
+  });
+  return points;
+}
+
 function createDataSeries (points) {
   var series = [];
 
@@ -41,7 +65,7 @@ function createDataSeries (points) {
     var team = teams[teamId];
     series.push({
       name: team.title,
-      data: teamTotals[teamId]
+      data: insertFlatteningPoints(teamTotals[teamId])
     });
   });
 
