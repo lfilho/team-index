@@ -1,7 +1,7 @@
 const React = require('react');
-const isValidDbKey = require('../../lib/validate-db-key');
-const convertDocToArchie = require('../../lib/doc-to-archie');
-const Preview = require('./wiki/preview');
+const isValidDbKey = require('../../../lib/validate-db-key');
+const convertDocToArchie = require('../../../lib/doc-to-archie');
+const Preview = require('./preview');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 

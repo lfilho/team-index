@@ -5,7 +5,7 @@ const convertDocToArchie = require('../../../lib/doc-to-archie');
 const marked = require('marked');
 const moment = require('moment');
 const React = require('react');
-const WikiLink = require('../wiki-link');
+const WikiLink = require('./wiki-link');
 
 module.exports = {
   // wikiPage renders the ".body" value as markdown

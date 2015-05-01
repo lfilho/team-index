@@ -6,7 +6,7 @@ function setup (createConnectedComponent) {
     return {};
   });
 
-  var Wiki = createConnectedComponent(require('./wiki'), ['wiki'], function (stores, props) {
+  var Wiki = createConnectedComponent(require('./wiki/wiki'), ['wiki'], function (stores, props) {
     return {
       docs: stores.wiki.get()
     };
