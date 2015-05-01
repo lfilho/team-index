@@ -3,6 +3,7 @@
 const archieml = require('archieml');
 const convertDocToArchie = require('../../../lib/doc-to-archie');
 const marked = require('marked');
+const moment = require('moment');
 const React = require('react');
 const WikiLink = require('../wiki-link');
 
@@ -71,8 +72,23 @@ module.exports = {
     const teamId = parsed.team;
     delete parsed.person;
     delete parsed.team;
-    const extraData = convertDocToArchie(parsed);
 
+    // format dates
+    ['startedAt', 'endedAt'].forEach(function (key) {
+      if (!parsed.hasOwnProperty(key)) { return; }
+
+      let val = parsed[key].trim();
+      if (val.match(/^[0-9]+$/)) {
+        val = new Date(parseInt(val, 10));
+      }
+      else {
+        val = new Date(val);
+      }
+
+      parsed[key] = moment(val).format('MMMM Do YYYY, h:mm:ss a');
+    });
+
+    const extraData = convertDocToArchie(parsed);
     const preview = (
       <div>
         <div>Person: <WikiLink id={personId} /></div>
