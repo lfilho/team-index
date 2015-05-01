@@ -5,6 +5,21 @@ const Preview = require('./wiki/preview');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
+function createState (id, props) {
+  let state = {
+    body: null,
+    loading: true,
+    editing: false
+  };
+
+  const doc = props.docs[id];
+  if (!doc) { return state; }
+
+  state.loading = false;
+  state.body = convertDocToArchie(doc);
+  return state;
+}
+
 module.exports = React.createClass({
   propTypes: {
     actionCallback: React.PropTypes.func.isRequired,
@@ -13,23 +28,11 @@ module.exports = React.createClass({
   },
 
   getInitialState: function () {
-    return {
-      body: null,
-      loading: true,
-      editing: false
-    };
+    return createState(this.props.id, this.props);
   },
 
   populateForm: function (id, props) {
-    const loading = false;
-    var doc = props.docs[id];
-    if (!doc) {
-      this.setState({ loading });
-      return;
-    }
-
-    var body = convertDocToArchie(doc);
-    this.setState({ loading, body });
+    this.setState(createState(id, props));
   },
 
   componentWillMount: function () {
@@ -179,7 +182,6 @@ module.exports = React.createClass({
 
   render: function () {
     const id = this.props.id;
-
     if (this.state.loading) {
       return (
         <div className="wiki">
