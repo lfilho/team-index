@@ -26,15 +26,31 @@ stores.auth.isLoggedIn = function () {
 
 // ----
 
-var currentRoute = location.hash.replace(/^\#/, '') || '/';
+function getRouteFromHash () {
+  return location.hash.replace(/^\#/, '') || '/';
+}
+
 stores.route = new Store({
-  current: currentRoute,
-  docId: 'home'
+  current: getRouteFromHash()
 });
 
 // ----
 
 stores.wiki = new Store({});
+
+// ----
+// watch for changes to hash
+
+window.addEventListener('hashchange', function (event) {
+  stores.route.set({
+    current: getRouteFromHash()
+  });
+});
+
+stores.route.addListener(function () {
+  const data = stores.route.get();
+  location.hash = data.current;
+});
 
 // ----
 
