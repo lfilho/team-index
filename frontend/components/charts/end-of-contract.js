@@ -12,7 +12,7 @@ var Memberships = React.createClass({
       let [id, name, endDate, teamAndHours] = [
         membership._id,
         membership.person,
-        moment(membership.endedAt).fromNow(),
+        moment(Number(membership.endedAt)).fromNow(),
         <small><em>({membership.team}, {membership.hoursPerWeek}h)</em></small>,
         membership.hoursPerWeek
       ];
