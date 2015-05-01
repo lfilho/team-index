@@ -2,7 +2,7 @@ var React = require('react');
 
 const moment = require('moment');
 const CHART_TYPE = 'ending-contracts';
-const WikiLink = require('../wiki-link');
+const WikiLink = require('../wiki/wiki-link');
 
 var Memberships = React.createClass({
   render: function () {
