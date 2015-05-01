@@ -18,21 +18,18 @@ function setup (createConnectedComponent) {
         return <div className="welcome">X-TEAM DASHBOARD</div>;
       }
 
-      let Component;
       const match = paramify(this.props.route);
+
       if (match('/')) {
-        Component = Charts;
-      }
-      else if (match('/wiki/:id?')) {
-        Component = Wiki;
-        if (!match.params.id) {
-          match.params.id = 'home';
-        }
+        return <Charts />;
       }
 
-      if (!Component) { return null; }
+      if (match('/wiki/:id?')) {
+        const defaultDocId = 'home';
+        const id = match.params.id || defaultDocId;
 
-      return <Component {...match.params} />;
+        return <Wiki id={id} />;
+      }
     }
   });
 }
