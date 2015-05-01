@@ -166,7 +166,7 @@ module.exports = React.createClass({
         <form className="create" onSubmit={this.onSubmitCreate}>
           <h2>Create a doc</h2>
           <div>
-            <input name="id" placeholder="ID" ref="idField" defaultValue={this.props.id} />
+            <input name="id" placeholder="ID" ref="idField" value={this.props.id} />
           </div>
           <div>
             <select name="type" ref="typeField">
@@ -182,6 +182,12 @@ module.exports = React.createClass({
 
   render: function () {
     const id = this.props.id;
+
+    const exists = !!this.props.docs[id];
+    if (!exists) {
+      return this._renderCreateForm();
+    }
+
     if (this.state.loading) {
       return (
         <div className="wiki">
@@ -190,10 +196,6 @@ module.exports = React.createClass({
       );
     }
 
-    const exists = !!this.props.docs[id];
-    if (!exists) {
-      return this._renderCreateForm();
-    }
 
     const doc = this.props.docs[id];
     const headerButtons = this._renderHeaderButtons();
