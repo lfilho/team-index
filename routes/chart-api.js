@@ -10,13 +10,28 @@ function addRoutes (router, sessionStore, rpc) {
   router.addRoute('/api/charts/team-size', {
     GET: restrict(function (req, res, opts) {
       const TWO_MONTHS = 1000 * 3600 * 24 * 61;
-      let query = querystring.parse(opts.parsedUrl.query);
+      const query = querystring.parse(opts.parsedUrl.query);
 
-      let to = Number(query.to) || Date.now();
-      let from = Number(query.from) || to - TWO_MONTHS;
+      const to = Number(query.to) || Date.now();
+      const from = Number(query.from) || to - TWO_MONTHS;
 
       rpc.timeline.getDataPoints(from, to, function (err, points) {
         sendJson(req, res, points);
+      });
+    })
+  });
+
+  router.addRoute('/api/charts/ending-contracts', {
+    GET: restrict(function (req, res, opts) {
+      const TWO_MONTHS = 1000 * 3600 * 24 * 61;
+      const query = querystring.parse(opts.parsedUrl.query);
+
+      // default is to show any contracts ending within the next 2 months
+      const from = Date.now();
+      const to = Number(query.to) || from + TWO_MONTHS;
+
+      rpc.timeline.getEndingContracts(from, to, function (err, result) {
+        sendJson(req, res, result);
       });
     })
   });
