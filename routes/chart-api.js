@@ -9,11 +9,11 @@ function addRoutes (router, sessionStore, rpc) {
 
   router.addRoute('/api/charts/team-size', {
     GET: restrict(function (req, res, opts) {
-      const TWO_MONTHS = 1000 * 3600 * 24 * 61;
+      const ONE_MONTH = 1000 * 3600 * 24 * 30;
       const query = querystring.parse(opts.parsedUrl.query);
 
-      const to = Number(query.to) || Date.now();
-      const from = Number(query.from) || to - TWO_MONTHS;
+      const to = Number(query.to) || Date.now() + ONE_MONTH;
+      const from = Number(query.from) || Date.now() - ONE_MONTH;
 
       rpc.timeline.getDataPoints(from, to, function (err, points) {
         sendJson(req, res, points);
