@@ -1,15 +1,13 @@
 var React = require('react');
+const paramify = require('paramify');
 
 function setup (createConnectedComponent) {
   var Charts = createConnectedComponent(require('./charts'), [], function (stores, props) {
     return {};
   });
 
-  var Wiki = createConnectedComponent(require('./wiki'), ['route', 'wiki'], function (stores, props) {
-    const id = stores.route.get().docId;
-
+  var Wiki = createConnectedComponent(require('./wiki'), ['wiki'], function (stores, props) {
     return {
-      id: id,
       docs: stores.wiki.get()
     };
   });
@@ -20,16 +18,21 @@ function setup (createConnectedComponent) {
         return <div className="welcome">X-TEAM DASHBOARD</div>;
       }
 
-      var componentsByRoute = {
-        '/': Charts,
-        '/wiki': Wiki
-      };
+      let Component;
+      const match = paramify(this.props.route);
+      if (match('/')) {
+        Component = Charts;
+      }
+      else if (match('/wiki/:id?')) {
+        Component = Wiki;
+        if (!match.params.id) {
+          match.params.id = 'home';
+        }
+      }
 
-      var Component = componentsByRoute[this.props.route];
       if (!Component) { return null; }
 
-
-      return <Component />;
+      return <Component {...match.params} />;
     }
   });
 }
