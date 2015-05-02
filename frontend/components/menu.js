@@ -56,6 +56,6 @@ var Menu = React.createClass({
       <ul>{itemElems}</ul>
     );
   }
-})
+});
 
 module.exports = Menu;

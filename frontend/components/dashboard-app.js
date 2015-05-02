@@ -38,6 +38,6 @@ function setup (createConnectedComponent) {
         );
       }
     });
-};
+}
 
 module.exports = setup;

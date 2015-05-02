@@ -38,7 +38,7 @@ setupDom(function () {
       id: doc._id,
       doc: doc,
       actionCallback: function () {
-        throw(new Error('expected no actions'));
+        throw new Error('expected no actions');
       }
     };
 

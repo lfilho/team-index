@@ -58,6 +58,6 @@ var AuthControls = React.createClass({
       </div>
     );
   }
-})
+});
 
 module.exports = AuthControls;

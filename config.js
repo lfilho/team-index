@@ -27,7 +27,7 @@ const config = {
     secret: process.env.GOOGLE_SECRET,
     baseUrl: process.env.BASE_URL,
     loginUri: '/login',
-    callbackUri: '/oauth2callback',
+    callbackUri: '/oauth2callback'
   },
 
   /*

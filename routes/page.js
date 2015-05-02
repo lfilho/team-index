@@ -8,6 +8,8 @@ function addRoutes (router, sessionStore) {
   router.addRoute('/', function (req, res) {
     let session = genericSession(req, res, sessionStore);
     session.get('info', function (err, info) {
+      if (err) { console.log(err); }
+
       info = info || {};
 
       let authState = {

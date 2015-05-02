@@ -23,6 +23,7 @@ fs.readFileSync(sourceFilename, 'utf8')
   .forEach(bind(sourceIndex, 'append'));
 
 require('./lib/get-timeline-data')(sourceIndex, teamId, ts, function (err, res) {
+  if (err) { throw err; }
   console.log('\nWho is in the %s team @ %s?\n', teamId, new Date(ts), arrayFrom(res.members));
   console.log('Total dev hours per week: %d\n', res.totalHours, arrayFrom(res.hours));
 });
