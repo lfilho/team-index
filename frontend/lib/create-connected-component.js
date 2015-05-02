@@ -37,6 +37,10 @@ function setup (stores, actions) {
         });
       },
 
+      componentWillReceiveProps: function (nextProps) {
+        this.setState(loadState(stores, nextProps));
+      },
+
       onStoreChanged: function () {
         if (!this.isMounted()) { return; }
 
