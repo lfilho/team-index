@@ -7,8 +7,9 @@ function setup (createConnectedComponent) {
   });
 
   var Wiki = createConnectedComponent(require('./wiki/wiki'), ['wiki'], function (stores, props) {
+    const docs = stores.wiki.get();
     return {
-      docs: stores.wiki.get()
+      doc: docs[props.id]
     };
   });
 

@@ -5,51 +5,62 @@ const Preview = require('./preview');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
-function createState (id, props) {
+function createState (props) {
   let state = {
     body: null,
-    loading: true,
+    loadedId: null,
     editing: false
   };
 
-  const doc = props.docs[id];
-  if (!doc) { return state; }
+  if (props.doc) {
+    state.loadedId = props.doc._id;
+    state.body = convertDocToArchie(props.doc);
+  }
 
-  state.loading = false;
-  state.body = convertDocToArchie(doc);
   return state;
 }
 
 module.exports = React.createClass({
   propTypes: {
     actionCallback: React.PropTypes.func.isRequired,
-    docs: React.PropTypes.object.isRequired,
-    id: React.PropTypes.string.isRequired
+    id: React.PropTypes.string.isRequired,
+    doc: React.PropTypes.object
   },
 
   getInitialState: function () {
-    return createState(this.props.id, this.props);
+    return createState(this.props);
   },
 
-  populateForm: function (id, props) {
-    this.setState(createState(id, props));
+  populateForm: function (props) {
+    this.setState(createState(props));
   },
 
   componentWillMount: function () {
-    // start loading the current doc
-    this.props.actionCallback('wikiLoad', { id: this.props.id });
+    const props = this.props;
+    const shouldLoad = !this.state.loadedId;
+    if (shouldLoad) {
+      this.loadDoc(props);
+    }
+  },
+
+  loadDoc: function (props) {
+    const id = props.id;
+    this.setState({
+      loadedId: null
+    });
+    props.actionCallback('wikiLoad', { id }, this.onLoaded.bind(this, id));
+  },
+
+  onLoaded: function (id) {
+    this.setState({ loadedId: id });
   },
 
   componentWillReceiveProps: function (nextProps) {
-    // start loading the new doc
-    if (nextProps.id) {
-      let action = nextProps.actionCallback || this.props.actionCallback;
-      action('wikiLoad', { id: nextProps.id });
+    if (nextProps.id !== this.props.id && !nextProps.doc) {
+      return this.loadDoc(nextProps);
     }
 
-    if (nextProps.docs) {
-      this.populateForm(nextProps.id || this.props.id, nextProps);
-    }
+    this.setState(createState(nextProps));
   },
 
   componentDidMount: function () {
@@ -182,13 +193,9 @@ module.exports = React.createClass({
 
   render: function () {
     const id = this.props.id;
+    const isLoading = !this.state.loadedId;
 
-    const exists = !!this.props.docs[id];
-    if (!exists) {
-      return this._renderCreateForm();
-    }
-
-    if (this.state.loading) {
+    if (isLoading) {
       return (
         <div className="wiki">
           ..loading ({id})..
@@ -196,8 +203,13 @@ module.exports = React.createClass({
       );
     }
 
+    // if we've loaded something but still got no doc, create
+    const shouldCreate = !this.props.doc && !!this.state.loadedId;
+    if (shouldCreate) {
+      return this._renderCreateForm();
+    }
 
-    const doc = this.props.docs[id];
+    const doc = this.props.doc;
     const headerButtons = this._renderHeaderButtons();
     const editForm = this._renderEditForm();
 
