@@ -147,14 +147,22 @@ var Highchart = React.createClass({
 
 module.exports = React.createClass({
   getInitialState: function () {
+    const ONE_MONTH = 1000 * 3600 * 24 * 31;
+    const NOW = Date.now();
+
     return {
-      points: []
+      points: [],
+      to: NOW + ONE_MONTH,
+      from: NOW - ONE_MONTH
     };
   },
 
   componentDidMount: function () {
-    var self = this;
-    this.props.actionCallback('loadChart', { chartType: CHART_TYPE }, function (err, points) {
+    let self = this;
+    let to = this.state.to;
+    let from = this.state.from;
+
+    this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
       if (err) { console.log('Error loading chart:', err);}
 
       self.setState({ points });
@@ -170,20 +178,23 @@ module.exports = React.createClass({
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
       if (err) { console.log('Error updating chart:', err);}
 
-      self.setState({ points });
+      self.setState({ points, to, from });
     });
   },
 
   render: function () {
     var points = this.state.points;
+    let to = new Date(this.state.to).toISOString().split('T')[0];
+    let from = new Date(this.state.from).toISOString().split('T')[0];
+
     var chart = points && points.length ? <Highchart points={points} /> : null;
 
     return (
       <div className="team-size">
         <h2>Teams</h2>
 
-        From: <input ref="fromField" name="from" placeholder="YYYY-MM-DD"/>
-        To: <input ref="toField" name="to" placeholder="YYYY-MM-DD" />
+        From: <input ref="fromField" name="from" placeholder="YYYY-MM-DD" defaultValue={from} />
+        To: <input ref="toField" name="to" placeholder="YYYY-MM-DD" defaultValue={to} />
         <button name="updateTimeframe" onClick={this.onClickUpdateTimeframe}>Update timeframe</button>
 
         <div className="chart">{chart}</div>
