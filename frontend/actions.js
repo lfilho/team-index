@@ -80,6 +80,17 @@ module.exports = function (stores) {
       if (resp.statusCode !== 200) { return cb(new Error('save failed')); }
 
       cb();
+
+      // update the store with the saved data
+      let docs = stores.wiki.get();
+      if (!!docs[args.id]) {
+        if (!doc._type) { delete doc._type; }
+        assign(docs[args.id], doc);
+      }
+      else {
+        docs[args.id] = doc;
+      }
+      stores.wiki.set(docs);
     });
   };
 
