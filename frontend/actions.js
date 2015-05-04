@@ -5,35 +5,43 @@ const assign = require('object-assign');
 const querystring = require('querystring');
 const xhr = require('xhr');
 
-function loadWikiDoc (id, cb) {
-  xhr({
-    url: '/api/docs/' + id
-  }, function (err, resp, body) {
-    if (err) { return console.error(err); }
-
-    // not found: create a placeholder
-    if (resp.statusCode === 404) {
-      return cb(null, null);
-    }
-
-    if (resp.statusCode !== 200) {
-      return cb(new Error('load failed'));
-    }
-
-    let data;
-    try {
-      data = JSON.parse(body);
-    }
-    catch (e) {
-      return cb(new Error('invalid body'));
-    }
-
-    cb(null, data.doc);
-  });
-}
-
 module.exports = function (stores) {
   const actions = {};
+
+  function doXhr (opts, cb) {
+    xhr(opts, function (err, resp, body) {
+      if (err) { return cb(err); }
+
+      if (resp.statusCode === 403) {
+        stores.auth.clear();
+        let err = new Error('save failed');
+        err.statusCode = resp.statusCode;
+        return cb(err);
+      }
+
+      cb(err, resp, body);
+    });
+  }
+
+  function loadWikiDoc (id, cb) {
+    doXhr({
+      url: '/api/docs/' + id,
+      json: true
+    }, function (err, resp, body) {
+      if (err) { return cb(err); }
+
+      // not found
+      if (resp.statusCode === 404) {
+        return cb(null, null);
+      }
+
+      if (resp.statusCode !== 200) {
+        return cb(new Error('load failed'));
+      }
+
+      cb(null, body.doc);
+    });
+  }
 
   actions.wikiLoad = function (args, cb) {
     cb = cb || function () {};
@@ -71,14 +79,16 @@ module.exports = function (stores) {
       doc = assign(archieml.load(args.body), doc);
     }
 
-    xhr({
+    doXhr({
       uri: '/api/entries',
       method: 'POST',
       json: doc
     }, function (err, resp, body) {
       if (err) { return cb(err); }
+
       if (resp.statusCode !== 200) { return cb(new Error('save failed')); }
 
+      // notify caller
       cb();
 
       // update the store with the saved data
@@ -99,16 +109,14 @@ module.exports = function (stores) {
   };
 
   actions.logout = function () {
-    xhr({
+    doXhr({
       uri: '/logout',
     }, function (err, resp, body) {
       if (err) { return console.error(err); }
+
       if (resp.statusCode !== 200) { return console.error('logout failed'); }
 
-      stores.auth.set({
-        name: null,
-        picture: null
-      });
+      stores.auth.clear();
     });
   };
 
@@ -132,42 +140,29 @@ module.exports = function (stores) {
     const params = querystring.stringify(args);
     const uri = endpoint + (params ? '?' : '') + params;
 
-    xhr({
-      uri: uri
+    doXhr({
+      uri: uri,
+      json: true
     }, function (err, resp, body) {
       if (err) { return cb(err); }
+
       if (resp.statusCode !== 200) { return cb(new Error(resp)); }
 
-      var data;
-      try {
-        data = JSON.parse(body);
-      }
-      catch (e) {
-        return cb(new Error('invalid body'));
-      }
-
-      cb(null, data);
+      cb(null, body);
     });
-  };
+  },
 
   actions.loadTeamMembers = function (args, cb) {
     const uri = '/api/teams/' + args.teamId;
 
-    xhr({
-      uri: uri
+    doXhr({
+      uri: uri,
+      json: true
     }, function (err, resp, body) {
       if (err) { return cb(err); }
       if (resp.statusCode !== 200) { return cb(new Error(resp)); }
 
-      var data;
-      try {
-        data = JSON.parse(body);
-      }
-      catch (e) {
-        return cb(new Error('invalid body'));
-      }
-
-      cb(null, data);
+      cb(null, body);
     });
   };
 

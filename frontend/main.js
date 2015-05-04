@@ -24,6 +24,13 @@ stores.auth.isLoggedIn = function () {
   return !!this.data.name;
 };
 
+stores.auth.clear = function () {
+  this.set({
+    name: null,
+    picture: null
+  });
+};
+
 // ----
 
 function getRouteFromHash () {
