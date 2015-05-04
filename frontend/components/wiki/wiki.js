@@ -5,6 +5,21 @@ const Preview = require('./preview');
 
 const UNSAVED_CHANGES_MESSAGE = 'There are unsaved changes to the doc.\nDiscard them?';
 
+const LoadingMsg = React.createClass({
+  displayName: 'LoadingMsg',
+  propTypes: {
+    id: React.PropTypes.string.isRequired
+  },
+
+  render: function () {
+    return (
+      <div>
+        ..loading ({this.props.id})..
+       </div>
+    )
+  }
+});
+
 function createState (props) {
   let state = {
     body: null,
@@ -154,7 +169,7 @@ module.exports = React.createClass({
       ];
     }
 
-    return <button onClick={this.onClickEdit}>Edit</button>
+    return <button name="edit" onClick={this.onClickEdit}>Edit</button>
   },
 
   _renderEditForm: function () {
@@ -198,7 +213,7 @@ module.exports = React.createClass({
     if (isLoading) {
       return (
         <div className="wiki">
-          ..loading ({id})..
+          <LoadingMsg id={id} />
         </div>
       );
     }
@@ -228,3 +243,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports.LoadingMsg = LoadingMsg;
