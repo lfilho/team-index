@@ -13,13 +13,12 @@ var Memberships = React.createClass({
         membership._id,
         membership.person,
         moment(Number(membership.endedAt)).fromNow(),
-        <small><em>({membership.team}, {membership.hoursPerWeek}h)</em></small>,
-        membership.hoursPerWeek
+        <small><em>({membership.team}, {membership.hoursPerWeek}h)</em></small>
       ];
 
       let wikiLink = <WikiLink id={id}>{name} {teamAndHours} → {endDate}</WikiLink>;
 
-      return <li key={id}>{wikiLink}</li>
+      return <li key={id}>{wikiLink}</li>;
     });
 
     return <ul>{items}</ul>;
@@ -36,7 +35,7 @@ module.exports = React.createClass({
   componentDidMount: function () {
     var self = this;
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE }, function (err, result) {
-      if (err) { console.log('Error loading chart:', err);}
+      if (err) { console.log('Error loading chart:', err); }
 
       self.setState({ memberships: result.memberships });
     });

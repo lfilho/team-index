@@ -31,7 +31,7 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
     .map(JSON.parse)
     .forEach(function (data) {
       addEntry(db, data, function (err) {
-        if (err) throw err;
+        if (err) { throw err; }
       });
     });
 });

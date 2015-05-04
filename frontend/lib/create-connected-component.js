@@ -60,9 +60,9 @@ function setup (stores, actions) {
         return <Component {...this.props} {...this.state} actionCallback={this.onAction} />;
       }
     });
-  };
+  }
 
   return create;
-};
+}
 
 module.exports = setup;

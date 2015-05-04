@@ -16,7 +16,7 @@ const LoadingMsg = React.createClass({
       <div>
         ..loading ({this.props.id})..
        </div>
-    )
+    );
   }
 });
 
@@ -169,7 +169,7 @@ module.exports = React.createClass({
       ];
     }
 
-    return <button name="edit" onClick={this.onClickEdit}>Edit</button>
+    return <button name="edit" onClick={this.onClickEdit}>Edit</button>;
   },
 
   _renderEditForm: function () {

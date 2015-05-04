@@ -74,7 +74,7 @@ function createDataSeries (points) {
 }
 
 function createChart (series) {
-  new Highcharts.Chart({
+  let chart = new Highcharts.Chart({
     chart: {
       renderTo: 'team-size-chart',
       type: 'area',
@@ -163,7 +163,7 @@ module.exports = React.createClass({
     let from = this.state.from;
 
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
-      if (err) { console.log('Error loading chart:', err);}
+      if (err) { console.log('Error loading chart:', err); }
 
       self.setState({ points });
     });
@@ -176,7 +176,7 @@ module.exports = React.createClass({
     let from = Date.parse(this.refs.fromField.getDOMNode().value.trim());
 
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE, to, from }, function (err, points) {
-      if (err) { console.log('Error updating chart:', err);}
+      if (err) { console.log('Error updating chart:', err); }
 
       self.setState({ points, to, from });
     });

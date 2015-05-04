@@ -72,7 +72,7 @@ module.exports = function (stores) {
 
     let doc = {
       _id: args.id,
-      _type: args.type,
+      _type: args.type
     };
 
     if (args.body) {
@@ -110,7 +110,7 @@ module.exports = function (stores) {
 
   actions.logout = function () {
     doXhr({
-      uri: '/logout',
+      uri: '/logout'
     }, function (err, resp, body) {
       if (err) { return console.error(err); }
 
@@ -132,7 +132,7 @@ module.exports = function (stores) {
     stores.route.set({
       current: '/wiki/' + args.q
     });
-  },
+  };
 
   actions.loadChart = function (args, cb) {
     const endpoint = '/api/charts/' + args.chartType;
@@ -150,7 +150,7 @@ module.exports = function (stores) {
 
       cb(null, body);
     });
-  },
+  };
 
   actions.loadTeamMembers = function (args, cb) {
     const uri = '/api/teams/' + args.teamId;

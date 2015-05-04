@@ -24,9 +24,10 @@ function getSourceIndex () {
 }
 
 tape('Example usage', function (t) {
-  t.plan(5);
+  t.plan(6);
 
   require('../lib/get-timeline-data')(getSourceIndex(), teamId, ts, function (err, res) {
+    t.notOk(err);
     t.deepEqual(arrayFrom(res.members), ['PersonOne', 'PersonTwo'], 'Correct people in team');
     t.equal(res.hours.size, 2, 'Hours map contains correct team members');
     t.equal(res.hours.get('PersonOne'), 40, 'Correct hours for team member');
@@ -36,10 +37,11 @@ tape('Example usage', function (t) {
 });
 
 tape('Example usage, later in time', function (t) {
-  t.plan(4);
+  t.plan(5);
 
   // get the timeline data 1 ms after (this should be the point at which PersonTwo leaves the team)
   require('../lib/get-timeline-data')(getSourceIndex(), teamId, ts+1, function (err, res) {
+    t.notOk(err);
     t.deepEqual(arrayFrom(res.members), ['PersonOne'], 'Correct people in team');
     t.equal(res.hours.size, 1, 'Hours map contains correct team members');
     t.equal(res.hours.get('PersonOne'), 40, 'Correct hours for team member');

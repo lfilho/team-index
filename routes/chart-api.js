@@ -16,6 +16,7 @@ function addRoutes (router, sessionStore, rpc) {
       const from = Number(query.from) || Date.now() - ONE_MONTH;
 
       rpc.timeline.getDataPoints(from, to, function (err, points) {
+        if (err) { console.log(err); }
         sendJson(req, res, points);
       });
     })
@@ -31,6 +32,7 @@ function addRoutes (router, sessionStore, rpc) {
       const to = Number(query.to) || from + TWO_MONTHS;
 
       rpc.timeline.getEndingContracts(from, to, function (err, result) {
+        if (err) { console.log(err); }
         sendJson(req, res, result);
       });
     })
