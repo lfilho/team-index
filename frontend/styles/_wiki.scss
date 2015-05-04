@@ -4,21 +4,24 @@
   display: flex;
   flex-flow: wrap;
   align-items: stretch;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+  }
 }
 
-
 .wiki h1 {
-  margin: 0;
+  margin: 0 0 30px 0;
   width: 100%;
 
   .type {
     font-size: 14px;
-    font-weight: normal;
-    margin: 0 0 0 10px;
+    font-style: italic;
+    margin: 0;
   }
 
   button {
-    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
@@ -40,6 +43,22 @@
 .wiki .preview {
   flex-grow: 1;
   min-width: 400px;
+
+  a.wiki-link {
+    color: #3E9D71
+  }
+
+  table {
+    th {
+      font-weight: normal;
+      border-bottom: 1px solid #000;
+      text-align: left;
+    }
+
+    td {
+      padding: 5px 2px;
+    }
+  }
 }
 
 .wiki .create {

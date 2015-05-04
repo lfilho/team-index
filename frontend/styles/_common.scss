@@ -37,10 +37,9 @@ ul, ol {
   padding: 0;
 }
 
-.container {
+.content {
   max-width: 71.25em;
   min-height: 100%;
-  min-width: 860px;
   padding: 0 0 1em;
   margin: 0 auto;
   position: relative;
@@ -51,7 +50,8 @@ header {
   flex-flow: wrap;
   justify-content: space-between;
   padding: 20px;
-  background: #FFF url(/static/img/x.png) 20px 50% no-repeat;
+  padding-left: 0;
+  background: transparent url(/static/img/x.png) 0 50% no-repeat;
 }
 
 header .menu {
