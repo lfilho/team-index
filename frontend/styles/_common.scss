@@ -40,24 +40,24 @@ ul, ol {
 .content {
   max-width: 71.25em;
   min-height: 100%;
-  padding: 0 0 1em;
+  padding: 0 0 1em $content-left-padding;
   margin: 0 auto;
   position: relative;
 }
 
 header {
+  $pad: 20px;
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
-  padding: 20px;
-  padding-left: 0;
-  background: transparent url(/static/img/x.png) 0 50% no-repeat;
+  padding: $pad;
+  background: transparent url(/static/img/x.png) $pad 50% no-repeat;
 }
 
 header .menu {
   flex-grow: 1;
   align-items: flex-start;
-  margin-left: 60px;
+  margin-left: $content-left-padding;
 
   ul {
     display: flex;
