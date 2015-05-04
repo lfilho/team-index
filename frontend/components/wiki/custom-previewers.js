@@ -92,8 +92,7 @@ module.exports = {
     const extraData = convertDocToArchie(parsed);
     const preview = (
       <div>
-        <div>Person: <WikiLink id={personId} /></div>
-        <div>Team: <WikiLink id={teamId} /></div>
+        <div>Membership of <WikiLink id={personId} /> in the <WikiLink id={teamId} /> team.</div>
 
         <pre>{extraData}</pre>
       </div>
