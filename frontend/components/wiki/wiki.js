@@ -232,7 +232,7 @@ module.exports = React.createClass({
       <div className="wiki">
         <h1>
           {id}
-          <span className="type">{doc._type}</span>
+          <div className="type">{doc._type}</div>
           <span className="buttons">{headerButtons}</span>
         </h1>
 

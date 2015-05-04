@@ -9,6 +9,6 @@ module.exports = React.createClass({
     const href = '#/wiki/' + this.props.id;
     const text = this.props.children || this.props.id;
 
-    return <a href={href}>{text}</a>;
+    return <a className="wiki-link" href={href}>{text}</a>;
   }
 });
