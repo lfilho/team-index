@@ -34,8 +34,11 @@
     "xhr": "^2.0.1"
   },
   "devDependencies": {
+    "babel": "^5.2.9",
+    "babel-tape-runner": "^1.1.0",
     "babelify": "^6.0.2",
     "browserify": "^9.0.8",
+    "jsdom": "^5.3.0",
     "tape": "^4.0.0",
     "watchify": "^3.1.1"
   },
@@ -45,7 +48,7 @@
     "build-css": "scss frontend/styles/main.scss > static/dist/main.css",
     "build-js": "browserify -t babelify frontend/main.js > static/dist/main.js",
     "build-watch": "npm run pre-build && npm run build-css && watchify -t babelify -d -v -o static/dist/main.js frontend/main.js",
-    "test": "tape tests/**/*.js"
+    "test": "babel-tape-runner tests/**/*.js"
   },
   "repository": {
     "type": "git",
