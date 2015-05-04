@@ -8,13 +8,13 @@ This means that components can be built without much knowledge of the surroundin
 var React = require('react');
 
 function setup (stores, actions) {
-  function create (Component, storeNames, loadState) {
-    var isFunc = (typeof Component === 'function');
-    var isReactClass = (isFunc && typeof Component.prototype.render === 'function');
+  function create (component, storeNames, loadState) {
+    var isFunc = (typeof component === 'function');
+    var isReactClass = (isFunc && typeof component.prototype.render === 'function');
 
     // if this is a setup function, call it to get a react class.
     if (isFunc && !isReactClass) {
-      Component = Component(create);
+      component = component(create);
     }
 
     return React.createClass({
@@ -57,7 +57,7 @@ function setup (stores, actions) {
       },
 
       render: function () {
-        return <Component {...this.props} {...this.state} actionCallback={this.onAction} />;
+        return <component {...this.props} {...this.state} actionCallback={this.onAction} />;
       }
     });
   }

@@ -1,5 +1,7 @@
 'use strict';
 
+const levelSession = require('level-session');
+
 /*
 
 Team Index
@@ -44,11 +46,11 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   require('./lib/setup-home-doc')(config.homeDocId, docIndex, rpc);
 
   // - setup the session storage
-  let sessionStore = require('level-session').LevelStore(config.sessionDbFile);
+  const sessionStore = new levelSession.LevelStore(config.sessionDbFile);
 
   // - setup http server & routes
-  let httpServer = require('./lib/http-server')();
-  let router = httpServer.router;
+  const httpServer = require('./lib/http-server')();
+  const router = httpServer.router;
 
   require('./routes/static')(router, config.staticFiles);
   require('./routes/auth')(router, sessionStore, config.auth);

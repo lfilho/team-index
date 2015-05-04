@@ -1,22 +1,21 @@
-var React = require('react');
+'use strict';
 
+const React = require('react');
 const moment = require('moment');
 const CHART_TYPE = 'ending-contracts';
 const WikiLink = require('../wiki/wiki-link');
 
-var Memberships = React.createClass({
+const Memberships = React.createClass({
   render: function () {
-    let memberships = this.props.src;
+    const memberships = this.props.src;
 
-    let items = memberships.map(function(membership) {
-      let [id, name, endDate, teamAndHours] = [
-        membership._id,
-        membership.person,
-        moment(Number(membership.endedAt)).fromNow(),
-        <small><em>({membership.team}, {membership.hoursPerWeek}h)</em></small>
-      ];
-
-      let wikiLink = <WikiLink id={id}>{name} {teamAndHours} → {endDate}</WikiLink>;
+    const items = memberships.map(function(membership) {
+      const id = membership._id;
+      const personId = membership.person;
+      const relativeEndDate = moment(Number(membership.endedAt)).fromNow();
+      const teamAndHours = membership.team + ', ' + membership.hoursPerWeek + 'h';
+      const teamAndHoursElem = <small><em>({teamAndHours})</em></small>;
+      const wikiLink = <WikiLink id={id}>{personId} {teamAndHoursElem} → {relativeEndDate}</WikiLink>;
 
       return <li key={id}>{wikiLink}</li>;
     });
@@ -33,7 +32,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    var self = this;
+    const self = this;
     this.props.actionCallback('loadChart', { chartType: CHART_TYPE }, function (err, result) {
       if (err) { console.log('Error loading chart:', err); }
 
@@ -42,8 +41,8 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    let memberships = this.state.memberships;
-    let chart = <Memberships src={memberships} />;
+    const memberships = this.state.memberships;
+    const chart = <Memberships src={memberships} />;
 
     return (
       <div className="end-of-contract">

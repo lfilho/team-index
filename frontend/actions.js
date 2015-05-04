@@ -48,7 +48,7 @@ module.exports = function (stores) {
 
     // don't need to load if already in memory
     const doc = stores.wiki.data[args.id];
-    if (!!doc) {
+    if (doc) {
       return cb(null, doc);
     }
 
@@ -93,7 +93,7 @@ module.exports = function (stores) {
 
       // update the store with the saved data
       let docs = stores.wiki.get();
-      if (!!docs[args.id]) {
+      if (docs[args.id]) {
         if (!doc._type) { delete doc._type; }
         assign(docs[args.id], doc);
       }
