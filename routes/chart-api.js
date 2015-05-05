@@ -4,8 +4,8 @@ let sendJson = require('send-data/json');
 let sendError = require('../lib/send-error');
 let querystring = require('querystring');
 
-function addRoutes (router, sessionStore, rpc) {
-  let restrict = require('../lib/restrict').bind(null, sessionStore);
+function addRoutes (router, sessions, rpc) {
+  let restrict = require('../lib/restrict').bind(null, sessions);
 
   router.addRoute('/api/charts/team-size', {
     GET: restrict(function (req, res, opts) {

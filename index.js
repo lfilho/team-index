@@ -1,7 +1,5 @@
 'use strict';
 
-const levelSession = require('level-session');
-
 /*
 
 Team Index
@@ -46,17 +44,19 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   require('./lib/setup-home-doc')(config.homeDocId, docIndex, rpc);
 
   // - setup the session storage
-  const sessionStore = new levelSession.LevelStore(config.sessionDbFile);
+  const sessions = require('level-session')({
+    location: config.sessionDbFile
+  });
 
   // - setup http server & routes
   const httpServer = require('./lib/http-server')();
   const router = httpServer.router;
 
   require('./routes/static')(router, config.staticFiles);
-  require('./routes/auth')(router, sessionStore, config.auth);
-  require('./routes/page')(router, sessionStore);
-  require('./routes/data-api')(router, sessionStore, rpc);
-  require('./routes/chart-api')(router, sessionStore, rpc);
+  require('./routes/auth')(router, sessions, config.auth);
+  require('./routes/page')(router, sessions);
+  require('./routes/data-api')(router, sessions, rpc);
+  require('./routes/chart-api')(router, sessions, rpc);
 
   // - start the http server
   httpServer.listen(config.port);
@@ -67,7 +67,8 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
     const r = require('./lib/start-repl');
     r.context.rpc = rpc;
     r.context.app = {
-      indexRegistry: indexRegistry
+      indexRegistry: indexRegistry,
+      sessions: sessions
     };
     r.on('exit', function () {
       httpServer.close();

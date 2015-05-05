@@ -1,6 +1,5 @@
 'use strict';
 
-let genericSession = require('generic-session');
 let redirect = require('redirecter');
 let loadGoogleProfile = require('../lib/load-google-profile');
 let sendError = require('../lib/send-error');
@@ -11,7 +10,7 @@ function isEmailWhitelisted(loginEmail) {
   return EMAIL_WHITELIST.indexOf(loginEmail) !== -1;
 }
 
-function setup (router, sessionStore, config) {
+function setup (router, sessions, config) {
   let oauth = require('../lib/oauth')({
     clientId: config.clientId,
     secret: config.secret,
@@ -26,39 +25,42 @@ function setup (router, sessionStore, config) {
   });
 
   router.addRoute('/logout', function (req, res) {
-    let session = genericSession(req, res, sessionStore);
-    session.del('info', function (err) {
-      if (err) { return sendError(res, err, 'session error'); }
-      redirect(req, res, '/');
+    sessions(req, res, function () {
+      req.session.del('info', function (err) {
+        if (err) { return sendError(res, err, 'session error'); }
+        redirect(req, res, '/');
+      });
     });
   });
 
   router.addRoute(config.callbackUri, function (req, res) {
-    let session = genericSession(req, res, sessionStore);
+    sessions(req, res, function () {
+      const session = req.session;
 
-    oauth.handleCallback(req, function (err, data, decoded) {
-      if (err) { return sendError(res, err, 'oauth error'); }
+      oauth.handleCallback(req, function (err, data, decoded) {
+        if (err) { return sendError(res, err, 'oauth error'); }
 
-      if (!isEmailWhitelisted(decoded.email)) {
-        let err = new Error('Access not allowed to ' + decoded.email);
-        err.statusCode = 403;
-        return sendError(res, err);
-      }
+        if (!isEmailWhitelisted(decoded.email)) {
+          let err = new Error('Access not allowed to ' + decoded.email);
+          err.statusCode = 403;
+          return sendError(res, err);
+        }
 
-      loadGoogleProfile(data.access_token, function (err, profile) {
-        if (err) { return sendError(res, err, 'loadUserProfile error'); }
+        loadGoogleProfile(data.access_token, function (err, profile) {
+          if (err) { return sendError(res, err, 'loadUserProfile error'); }
 
-        let info = {
-          email: decoded.email,
-          refresh: data.refresh_token,
-          name: profile.name,
-          picture: profile.picture
-        };
+          let info = {
+            email: decoded.email,
+            refresh: data.refresh_token,
+            name: profile.name,
+            picture: profile.picture
+          };
 
-        session.set('info', info, function (err) {
-          if (err) { return sendError(res, err, 'session error'); }
+          session.set('info', info, function (err) {
+            if (err) { return sendError(res, err, 'session error'); }
 
-          redirect(req, res, '/');
+            redirect(req, res, '/');
+          });
         });
       });
     });
