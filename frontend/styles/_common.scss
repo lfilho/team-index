@@ -51,13 +51,13 @@ header {
   flex-flow: wrap;
   justify-content: space-between;
   padding: $pad;
-  background: transparent url(/static/img/x.png) $pad 50% no-repeat;
+  padding-left: 65px;
+  background: transparent url(/static/img/x.png) 6px 50% no-repeat;
 }
 
 header .menu {
   flex-grow: 1;
   align-items: flex-start;
-  margin-left: $content-left-padding;
 
   ul {
     display: flex;
