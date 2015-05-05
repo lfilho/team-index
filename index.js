@@ -45,7 +45,8 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
 
   // - setup the session storage
   const sessions = require('level-session')({
-    location: config.sessionDbFile
+    location: config.sessions.dbFile,
+    expire: config.sessions.ttl
   });
 
   // - setup http server & routes

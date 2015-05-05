@@ -11,7 +11,12 @@ let path = require('path');
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
-  sessionDbFile: './.sessions',
+
+  sessions: {
+    dbFile: './.sessions',
+    ttl: (60 * 60 * 24 * 7 * 1000) // 1 week
+  },
+
   emailWhitelist: require('./.email-whitelist.json'),
 
   /*
