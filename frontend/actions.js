@@ -10,7 +10,10 @@ module.exports = function (stores) {
 
   function doXhr (opts, cb) {
     xhr(opts, function (err, resp, body) {
-      if (err) { return cb(err); }
+      if (err) {
+        alert('Oh nos! We couldn\'t complet your request!\nIf you\'re sure you\'re online, contact the admin to make sure his server also is :-)');
+        return cb(err);
+      }
 
       if (resp.statusCode === 403) {
         stores.auth.clear();
