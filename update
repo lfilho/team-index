@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR=`pwd`
+chmod -R deploy:deploy $DIR
+sudo -iu deploy bash -c "cd $DIR && npm install && npm run build"
