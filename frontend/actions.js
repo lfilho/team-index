@@ -11,7 +11,7 @@ module.exports = function (stores) {
   function doXhr (opts, cb) {
     xhr(opts, function (err, resp, body) {
       if (err) {
-        alert('Oh nos! We couldn\'t complet your request!\nIf you\'re sure you\'re online, contact the admin to make sure his server also is :-)');
+        alert('Oh nos! We couldn\'t complete your request!\nPlease contact the admin for support.');
         return cb(err);
       }
 
