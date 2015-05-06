@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 const paramify = require('paramify');
 
 function setup (createConnectedComponent) {

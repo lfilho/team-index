@@ -1,6 +1,6 @@
-var React = require('react');
+const React = require('react');
 
-var Menu = React.createClass({
+const Menu = React.createClass({
   onClick: function (route) {
     this.props.actionCallback('setRoute', { route: route });
   },
@@ -16,7 +16,7 @@ var Menu = React.createClass({
   render: function () {
     if (!this.props.isLoggedIn) { return null; }
 
-    var items = [];
+    const items = [];
 
     items.push({
       route: '/',
@@ -28,12 +28,12 @@ var Menu = React.createClass({
       title: 'Wiki'
     });
 
-    var itemElems = items.map(function (item, i) {
-      var title = item.title;
-      var href = '#' + item.route;
-      var onClick = this.onClick.bind(this, item.route);
+    const itemElems = items.map(function (item, i) {
+      const title = item.title;
+      const href = '#' + item.route;
+      const onClick = this.onClick.bind(this, item.route);
 
-      var link = (item.route === this.props.route) ?
+      const link = (item.route === this.props.route) ?
           item.title :
           <a href={href} onClick={onClick}>{title}</a>;
 

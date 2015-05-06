@@ -1,18 +1,18 @@
-var React = require('react');
+const React = require('react');
 
 function setup (createConnectedComponent) {
-  var MainContent = createConnectedComponent(require('./main-content'), ['auth', 'route'], function (stores, props) {
+  const MainContent = createConnectedComponent(require('./main-content'), ['auth', 'route'], function (stores, props) {
     return {
       isLoggedIn: stores.auth.isLoggedIn(),
       route: stores.route.data.current
     };
   });
 
-  var AuthControls = createConnectedComponent(require('./auth-controls'), ['auth'], function (stores, props) {
+  const AuthControls = createConnectedComponent(require('./auth-controls'), ['auth'], function (stores, props) {
     return stores.auth.get();
   });
 
-  var Menu = createConnectedComponent(require('./menu'), ['auth', 'route'], function (stores, props) {
+  const Menu = createConnectedComponent(require('./menu'), ['auth', 'route'], function (stores, props) {
     return {
       isLoggedIn: stores.auth.isLoggedIn(),
       route: stores.route.data.current
@@ -20,7 +20,7 @@ function setup (createConnectedComponent) {
   });
 
   return React.createClass({
-      render: function () {
+    render: function () {
         return (
           <div>
             <header>
