@@ -1,6 +1,6 @@
 'use strict';
 
-const archieml = require('archieml');
+const convertArchieToDoc = require('../../../lib/archie-to-doc');
 const convertDocToArchie = require('../../../lib/doc-to-archie');
 const marked = require('marked');
 const moment = require('moment');
@@ -11,7 +11,7 @@ module.exports = {
   // wikiPage renders the ".body" value as markdown
   wikiPage: function (props, cb) {
     // convert body to json and back again, so we only preview valid stuff
-    let parsed = archieml.load(props.body);
+    let parsed = convertArchieToDoc(props.body);
 
     const pageBody = parsed.body && { __html: marked(parsed.body) };
     const bodyElem = pageBody && <div dangerouslySetInnerHTML={pageBody}/>;
@@ -82,7 +82,7 @@ module.exports = {
   // teamMembership docs link to the team and the person
   teamMembership: function (props, cb) {
     // convert body to json and back again, so we only preview valid stuff
-    let parsed = archieml.load(props.body);
+    let parsed = convertArchieToDoc(props.body);
 
     const personId = parsed.person;
     const teamId = parsed.team;
@@ -93,13 +93,9 @@ module.exports = {
     ['startedAt', 'endedAt'].forEach(function (key) {
       if (!parsed.hasOwnProperty(key)) { return; }
 
-      let val = parsed[key].trim();
-      if (val.match(/^[0-9]+$/)) {
-        val = new Date(parseInt(val, 10));
-      }
-      else {
-        val = new Date(val);
-      }
+      const val = parsed[key];
+      if (typeof val !== 'number') { return; }
+      if (val === 0) { return; }
 
       parsed[key] = moment(val).format('MMMM Do YYYY, h:mm:ss a');
     });
