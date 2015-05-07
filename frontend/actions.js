@@ -1,6 +1,6 @@
 'use strict';
 
-const archieml = require('archieml');
+const archieToDoc = require('../lib/archie-to-doc');
 const assign = require('object-assign');
 const querystring = require('querystring');
 const xhr = require('xhr');
@@ -79,7 +79,7 @@ module.exports = function (stores) {
     };
 
     if (args.body) {
-      doc = assign(archieml.load(args.body), doc);
+      doc = assign(archieToDoc(args.body), doc);
     }
 
     doXhr({
