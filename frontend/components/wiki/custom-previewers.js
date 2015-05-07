@@ -16,14 +16,19 @@ module.exports = {
     const pageBody = parsed.body && { __html: marked(parsed.body) };
     const bodyElem = pageBody && <div dangerouslySetInnerHTML={pageBody}/>;
     delete parsed.body;
-    const extraData = convertDocToArchie(parsed);
+    const extraData = convertDocToArchie(parsed).trim();
+    const extraDataSection = extraData ? (
+      <div>
+      <h2>Extra data</h2>
+      <pre>{extraData}</pre>
+      </div>
+    ) : null;
 
     const preview = (
       <div>
         {bodyElem}
 
-        <h2>Extra data</h2>
-        <pre>{extraData}</pre>
+        {extraDataSection}
       </div>
     );
 
