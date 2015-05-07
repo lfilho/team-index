@@ -19,13 +19,6 @@ function addRoutes (router, sessions, rpc) {
           return sendError(res, err, 'invalid json');
         }
 
-        // normalize
-        ['startedAt', 'endedAt'].forEach(function (key) {
-          if (!data.hasOwnProperty(key)) { return; }
-
-          data[key] = Number(data[key]);
-        });
-
         rpc.entries.add(data, function (err) {
           if (err) { return sendError(res, err); }
 
