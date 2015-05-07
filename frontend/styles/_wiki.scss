@@ -72,3 +72,8 @@
     border: none;
   }
 }
+
+table tr.inactive {
+  color: #999;
+  font-style: italic;
+}

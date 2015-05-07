@@ -42,10 +42,16 @@ module.exports = {
       if (err) { return cb(err); }
 
       const memberElems = res.members.map(function (m) {
+        const now = Date.now();
+        const start = parseInt(m.startedAt || 0, 10);
+        const end = m.endedAt ? parseInt(m.endedAt, 10) : Infinity;
+        const isActive = (now > start && now < end);
+        const className = isActive ? 'active' : 'inactive';
         return (
-          <tr key={m._id}>
+          <tr key={m._id} className={className}>
             <td><WikiLink id={m._id}>{m.person}</WikiLink></td>
             <td>{m.hoursPerWeek}</td>
+            <td>{isActive ? 'yes' : 'no'}</td>
           </tr>
         );
       });
@@ -54,12 +60,16 @@ module.exports = {
         <div>
           <h2>Team members</h2>
           <table>
-            <tr>
-              <th>Name</th>
-              <th>Hours per week</th>
-            </tr>
-
-            {memberElems}
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hours per week</th>
+                <th>Active?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {memberElems}
+            </tbody>
           </table>
         </div>
       );
