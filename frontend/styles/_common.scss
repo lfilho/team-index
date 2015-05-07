@@ -55,6 +55,11 @@ header {
   background: transparent url(/static/img/x.png) 6px 50% no-repeat;
 }
 
+header .welcome {
+  font-style: italic;
+  font-size: 16px;
+}
+
 header .menu {
   flex-grow: 1;
   align-items: flex-start;

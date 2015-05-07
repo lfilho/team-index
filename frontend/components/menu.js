@@ -14,7 +14,9 @@ const Menu = React.createClass({
   },
 
   render: function () {
-    if (!this.props.isLoggedIn) { return null; }
+    if (!this.props.isLoggedIn) {
+      return <div className="welcome">Dashboard</div>;
+    }
 
     const items = [];
 

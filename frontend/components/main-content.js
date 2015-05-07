@@ -15,9 +15,7 @@ function setup (createConnectedComponent) {
 
   return React.createClass({
     render: function () {
-      if (!this.props.isLoggedIn) {
-        return <div className="welcome">X-TEAM DASHBOARD</div>;
-      }
+      if (!this.props.isLoggedIn) { return null; }
 
       const match = paramify(this.props.route);
 
