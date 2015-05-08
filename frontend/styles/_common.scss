@@ -45,6 +45,21 @@ button:hover {
   background-color: $red;
 }
 
+
+button[type=reset] {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  color: #999;
+  border-bottom: 1px dashed #999;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+
 a {
   color: $body-link-color;
   text-decoration: none;
