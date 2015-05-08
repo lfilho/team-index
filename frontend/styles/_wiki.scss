@@ -4,7 +4,6 @@
   display: flex;
   flex-flow: wrap;
   align-items: stretch;
-  border-left: 0.3em solid $red;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
@@ -12,7 +11,7 @@
 }
 
 .wiki h1 {
-  margin: 0 0 0.4em 0;
+  margin: 0;
 }
 
 button {
@@ -23,8 +22,10 @@ button {
   font-size: 14px;
   font-style: italic;
   margin-bottom: 1em;
-  border-bottom: 1px dashed $red;
-  padding-bottom: 1em;
+}
+
+.buttons {
+  margin-bottom: 2em;
 }
 
 .wiki h1,
@@ -51,10 +52,6 @@ button {
 .wiki .preview {
   flex-grow: 1;
   min-width: 400px;
-
-  a.wiki-link {
-    color: #3E9D71
-  }
 
   table {
     th {
@@ -89,7 +86,11 @@ button {
   }
 }
 
-table tr.inactive {
-  color: #999;
-  font-style: italic;
+a.wiki-link {
+  color: #3E8B9D;
+
+  &:hover,
+  &:active {
+    border-bottom: 1px solid #3E8B9D;
+  }
 }
