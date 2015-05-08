@@ -43,8 +43,10 @@ button {
     border: none;
     border-bottom: 1px solid #CCC;
     padding: 1em;
-    font-family: Courier;
+    font-family: $code-font-family;
     font-size: 13px;
+    letter-spacing: -0.02em;
+    line-height: 1.6;
     outline: none;
   }
 }
@@ -67,6 +69,15 @@ button {
     th, td {
       padding-right: 1.5em;
     }
+  }
+
+  code {
+    font-size: 85%;
+    font-family: $code-font-family;
+    background: #EEE;
+    color: #333;
+    border-radius: 3px;
+    padding: 2px 4px;
   }
 }
 
