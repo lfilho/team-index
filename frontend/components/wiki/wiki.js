@@ -119,7 +119,7 @@ module.exports = React.createClass({
     };
 
     if (this.state.hasChanged) {
-      const doc = this.props.docs[this.props.id];
+      const doc = this.props.doc;
       const body = convertDocToArchie(doc);
       newState.body = body;
     }
