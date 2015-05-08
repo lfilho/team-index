@@ -230,11 +230,9 @@ module.exports = React.createClass({
 
     return (
       <div className="wiki">
-        <h1>
-          {id}
-          <div className="type">{doc._type}</div>
-          <span className="buttons">{headerButtons}</span>
-        </h1>
+        <h1>{id}</h1>
+        <div className="type">{doc._type}</div>
+        <div className="buttons">{headerButtons}</div>
 
         {editForm}
 

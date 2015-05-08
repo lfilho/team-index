@@ -19,8 +19,24 @@ body {
   overflow-x: hidden;
 }
 
+h1 {
+  font-weight: bold;
+}
+
+h1, h2 {
+  color: $red;
+}
+
 input {
   font-family: 'Open Sans', sans-serif;
+  padding: 0.3em;
+}
+
+button {
+  padding: 0.5em;
+  border: 1px solid $red;
+  border-radius: 0.5em;
+  background-color: #f5f5f5;
 }
 
 a {
@@ -29,7 +45,8 @@ a {
 
   &:hover,
   &:active {
-    text-decoration: underline;
+    border-bottom: 1px solid $red;
+    border-top: 1px solid $red;
   }
 }
 
@@ -52,7 +69,8 @@ header {
   justify-content: space-between;
   padding: $pad;
   padding-left: 65px;
-  background: transparent url(/static/img/x.png) 6px 50% no-repeat;
+  background: transparent url(/static/img/x.svg) 0 60% no-repeat;
+  background-size: 5%;
 }
 
 header .welcome {
@@ -88,11 +106,16 @@ header .menu {
     border-bottom: 1px solid #CCC;
     color: #999;
     outline: none;
+    background: transparent;
   }
 
   li.search input:focus {
     border-bottom: 1px solid #000;
     color: #000;
+  }
+
+  .active {
+    border-top: 1px solid $red;
   }
 }
 
