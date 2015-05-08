@@ -40,9 +40,6 @@ require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docI
   // - setup the rpc module
   const rpc = require('./lib/rpc')(db, indexRegistry);
 
-  // - set up the docindex and default wiki page
-  require('./lib/setup-home-doc')(config.homeDocId, docIndex, rpc);
-
   // - setup the session storage
   const sessions = require('level-session')({
     location: config.sessions.dbFile,

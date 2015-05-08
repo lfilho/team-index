@@ -24,7 +24,8 @@ function setup (createConnectedComponent) {
       }
 
       if (match('/wiki/:id?')) {
-        const defaultDocId = 'home';
+        // TODO: this needs to come from config.js
+        const defaultDocId = 'welcome';
         const id = match.params.id || defaultDocId;
 
         return <Wiki id={id} />;

@@ -64,7 +64,7 @@ const config = {
     ----
 
   */
-  homeDocId: 'home'
+  homeDocId: 'welcome'
 };
 
 module.exports = config;
