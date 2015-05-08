@@ -164,8 +164,8 @@ module.exports = React.createClass({
     if (this.state.editing) {
       const cancelLabel = this.state.hasChanged ? 'Cancel' : 'Close';
       return [
-        <button key="cancel" type="reset" onClick={this.onClickCancel}>{cancelLabel}</button>,
-        <button key="save" type="submit" onClick={this.onClickSave}>Save</button>
+        <button key="save" type="submit" onClick={this.onClickSave}>Save</button>,
+        <button key="cancel" type="reset" onClick={this.onClickCancel}>{cancelLabel}</button>
       ];
     }
 
@@ -190,9 +190,9 @@ module.exports = React.createClass({
     return (
       <div className="wiki">
         <form className="create" onSubmit={this.onSubmitCreate}>
-          <h2>Create a doc</h2>
+          <h1>Create a doc</h1>
           <div>
-            <input name="id" placeholder="ID" ref="idField" value={this.props.id} />
+            <input name="id" placeholder="ID" ref="idField" value={this.props.id} readOnly={true} />
           </div>
           <div>
             <select name="type" ref="typeField">

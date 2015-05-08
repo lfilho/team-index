@@ -67,13 +67,14 @@ button {
 }
 
 .wiki .create {
-  min-width: 300px;
+  width: 100%;
 
-  h2 {
-    font-size: 16px;
+  h1 {
+    margin-bottom: 0.5em;
   }
 
   input {
+    font-size: 14px;
     width: 100%;
     padding: 5px;
     border: none;
@@ -82,7 +83,7 @@ button {
   }
 
   select {
-    margin: 2em 0;
+    margin-bottom: 2em;
   }
 }
 
