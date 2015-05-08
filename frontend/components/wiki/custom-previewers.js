@@ -19,7 +19,7 @@ module.exports = {
     const extraData = convertDocToArchie(parsed).trim();
     const extraDataSection = extraData ? (
       <div>
-      <h2>Extra data</h2>
+      <h2>Data</h2>
       <pre>{extraData}</pre>
       </div>
     ) : null;
