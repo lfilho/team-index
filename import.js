@@ -11,17 +11,18 @@ Use this script to import data from an ndjson file into the db.
 
 const config = require('./config');
 
-let fs = require('fs');
-let bind = require('bind-fn');
-let argv = require('minimist')(process.argv.slice(2));
-let sourceFilename = argv.source;
+const fs = require('fs');
+const bind = require('bind-fn');
+const addEntry = require('./lib/add-entry');
+
+const argv = require('minimist')(process.argv.slice(2));
+const sourceFilename = argv.source;
 
 if (!sourceFilename) {
   console.log('Usage: iojs import.js --source=SOURCE_FILENAME');
   process.exit();
 }
 
-let addEntry = require('./lib/add-entry');
 require('./lib/setup-db')({ dbFile: config.dataDbFile }, function (err, db, docIndex) {
   if (err) { throw err; }
 
