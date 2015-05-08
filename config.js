@@ -6,8 +6,12 @@ Config
 ====
 
 */
-require('dotenv').load();
-let path = require('path');
+const path = require('path');
+
+require('dotenv').load({
+  path: path.join(__dirname, '.env')
+});
+
 const config = {
   port: process.env.PORT || 8000,
   dataDbFile: './.db',
