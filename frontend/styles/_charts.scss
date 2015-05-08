@@ -6,6 +6,21 @@
 
     min-width: 300px;
     min-height: 200px;
-    background: #FFF;
+    background: transparent;
+
+    ul {
+      padding: 0.3em 2em;
+    }
+
+    li {
+      line-height: 1.6em;
+      list-style-image: url(../img/x.svg);
+    }
+  }
+
+  .team-size {
+    input {
+      margin: 0 1em;
+    }
   }
 }
