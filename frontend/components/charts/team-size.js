@@ -77,8 +77,9 @@ function createChart (series) {
   let chart = new Highcharts.Chart({
     chart: {
       renderTo: 'team-size-chart',
+      backgroundColor: 'transparent',
       type: 'area',
-      zoomType: 'x'
+      zoomType: 'xy'
     },
     title: {
       text: ''

@@ -36,7 +36,7 @@ const Menu = React.createClass({
       const onClick = this.onClick.bind(this, item.route);
 
       const link = (item.route === this.props.route) ?
-          item.title :
+          <span className="active">{title}</span> :
           <a href={href} onClick={onClick}>{title}</a>;
 
       return (

@@ -4,6 +4,7 @@
   display: flex;
   flex-flow: wrap;
   align-items: stretch;
+  border-left: 0.3em solid $red;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
@@ -11,24 +12,32 @@
 }
 
 .wiki h1 {
-  margin: 0 0 30px 0;
+  margin: 0 0 0.4em 0;
+  font-weight: bold;
+}
+
+button {
+  margin-right: 10px;
+}
+
+.type {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 1em;
+  border-bottom: 1px dashed $red;
+  padding-bottom: 1em;
+}
+
+.wiki h1,
+.type,
+.buttons {
   width: 100%;
-
-  .type {
-    font-size: 14px;
-    font-style: italic;
-    margin: 0;
-  }
-
-  button {
-    margin-right: 10px;
-  }
 }
 
 .wiki .edit {
   textarea {
-    min-height: 100px;
-    min-width: 300px;
+    min-height: 200px;
+    min-width: 500px;
     margin-right: 10px;
     background: #FFF;
     border: none;
@@ -62,14 +71,15 @@
 }
 
 .wiki .create {
-  h2 {
-    font-size: 16px;
-  }
-
   input {
     width: 100%;
-    padding: 5px;
     border: none;
+    outline: none;
+    background-color: transparent;
+  }
+
+  select {
+    margin: 2em 0;
   }
 }
 
