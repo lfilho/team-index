@@ -47,6 +47,16 @@ function addRoutes (router, sessions, rpc) {
       });
     })
   });
+
+  router.addRoute('/api/team-memberships-by-person/:personId', {
+    GET: restrict(function (req, res, opts) {
+      rpc.teams.getMembershipsByPerson(opts.params.personId, function (err, data) {
+        if (err) { return sendError(res, err); }
+
+        sendJson(req, res, data);
+      });
+    })
+  });
 }
 
 module.exports = addRoutes;
