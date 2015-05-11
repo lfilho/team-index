@@ -1,13 +1,24 @@
 'use strict';
 
 const convertArchieToDoc = require('../../../lib/archie-to-doc');
-const convertDocToArchie = require('../../../lib/doc-to-archie');
 const marked = require('marked');
 const moment = require('moment');
 const React = require('react');
 const WikiLink = require('./wiki-link');
+const DataPreview = require('./data-preview');
 
 module.exports = {
+  _default: function (props, cb) {
+    // convert body to json and back again, so we only preview valid stuff
+    let parsed = convertArchieToDoc(props.body);
+
+    const preview = (
+      <DataPreview data={parsed} />
+    );
+
+    cb(null, preview);
+  },
+
   // wikiPage renders the ".body" value as markdown
   wikiPage: function (props, cb) {
     // convert body to json and back again, so we only preview valid stuff
@@ -16,19 +27,11 @@ module.exports = {
     const pageBody = parsed.body && { __html: marked(parsed.body) };
     const bodyElem = pageBody && <div dangerouslySetInnerHTML={pageBody}/>;
     delete parsed.body;
-    const extraData = convertDocToArchie(parsed).trim();
-    const extraDataSection = extraData ? (
-      <div>
-      <h2>Data</h2>
-      <pre>{extraData}</pre>
-      </div>
-    ) : null;
 
     const preview = (
       <div>
         {bodyElem}
-
-        {extraDataSection}
+        <DataPreview data={parsed} />
       </div>
     );
 
@@ -100,12 +103,11 @@ module.exports = {
       parsed[key] = moment(val).format('MMMM Do YYYY, h:mm:ss a');
     });
 
-    const extraData = convertDocToArchie(parsed);
     const preview = (
       <div>
         <div>Membership of <WikiLink id={personId} /> in the <WikiLink id={teamId} /> team.</div>
 
-        <pre>{extraData}</pre>
+        <DataPreview data={parsed} />
       </div>
     );
 

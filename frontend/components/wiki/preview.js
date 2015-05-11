@@ -19,12 +19,7 @@ module.exports = React.createClass({
 
   loadPreview: function (props) {
     const self = this;
-    const func = customPreviewers[props.type];
-
-    if (!func) {
-      this.setState({ preview: <pre>{props.body}</pre> });
-      return;
-    }
+    const func = customPreviewers[props.type] || customPreviewers._default;
 
     func(props, function (err, preview) {
       if (err) { return console.error(err); }

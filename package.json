@@ -13,6 +13,7 @@
     "fingdex": "0.3.0",
     "generic-session": "^0.1.0",
     "glob": "^5.0.5",
+    "html-linkify": "^1.2.1",
     "hyperscript": "^1.4.6",
     "jsonwebtoken": "^5.0.0",
     "level": "^0.19.1",
