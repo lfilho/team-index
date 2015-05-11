@@ -38,7 +38,6 @@ module.exports = {
     cb(null, preview);
   },
 
-
   // team docs give you a list of members
   team: function (props, cb) {
     props.actionCallback('loadTeamMembers', { teamId: props.id }, function (err, res) {
@@ -59,8 +58,12 @@ module.exports = {
         );
       });
 
+      let parsed = convertArchieToDoc(props.body);
+
       const preview = (
         <div>
+          <DataPreview data={parsed} />
+
           <h2>Team members</h2>
           <table>
             <thead>
@@ -72,6 +75,51 @@ module.exports = {
             </thead>
             <tbody>
               {memberElems}
+            </tbody>
+          </table>
+        </div>
+      );
+
+      cb(null, preview);
+    });
+  },
+
+  // person docs give you a list of teams
+  person: function (props, cb) {
+    props.actionCallback('loadTeamMembershipsByPerson', { personId: props.id }, function (err, res) {
+      if (err) { return cb(err); }
+
+      const teamElems = res.memberships.map(function (m) {
+        const now = Date.now();
+        const start = parseInt(m.startedAt || 0, 10);
+        const end = m.endedAt ? parseInt(m.endedAt, 10) : Infinity;
+        const isActive = (now > start && now < end);
+        const className = isActive ? 'active' : 'inactive';
+        return (
+          <tr key={m._id} className={className}>
+          <td><WikiLink id={m._id}>{m.team}</WikiLink></td>
+          <td>{m.hoursPerWeek}</td>
+          <td>{isActive ? 'yes' : 'no'}</td>
+          </tr>
+        );
+      });
+
+      let parsed = convertArchieToDoc(props.body);
+      const preview = (
+        <div>
+          <DataPreview data={parsed} />
+
+          <h2>Teams</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hours per week</th>
+                <th>Active?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teamElems}
             </tbody>
           </table>
         </div>

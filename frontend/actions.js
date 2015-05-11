@@ -11,7 +11,7 @@ module.exports = function (stores) {
   function doXhr (opts, cb) {
     xhr(opts, function (err, resp, body) {
       if (err) {
-        alert('Oh nos! We couldn\'t complete your request!\nPlease contact the admin for support.');
+        alert("Oh nos! We couldn't complete your request!\nPlease contact the admin for support.");
         return cb(err);
       }
 
@@ -157,6 +157,20 @@ module.exports = function (stores) {
 
   actions.loadTeamMembers = function (args, cb) {
     const uri = '/api/teams/' + args.teamId;
+
+    doXhr({
+      uri: uri,
+      json: true
+    }, function (err, resp, body) {
+      if (err) { return cb(err); }
+      if (resp.statusCode !== 200) { return cb(new Error(resp)); }
+
+      cb(null, body);
+    });
+  };
+
+  actions.loadTeamMembershipsByPerson = function (args, cb) {
+    const uri = '/api/team-memberships-by-person/' + args.personId;
 
     doXhr({
       uri: uri,
