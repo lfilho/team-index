@@ -16,8 +16,14 @@ module.exports = React.createClass({
       if (key[0] === '_') { return; }
 
       let val = data[key];
-      let valHtml = val && { __html: linkify(val) };
-      const valElem = valHtml && <span className="value" dangerouslySetInnerHTML={valHtml}/>;
+      let valElem;
+      if (typeof val === 'string') {
+        let valHtml = val && { __html: linkify(val) };
+        valElem = valHtml && <span className="value" dangerouslySetInnerHTML={valHtml}/>;
+      }
+      else {
+        valElem = <span className="value">{val}</span>;
+      }
 
       return <li key={key}>{key + ': '} {valElem}</li>;
     });
